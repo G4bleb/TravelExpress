@@ -1,0 +1,11 @@
+import { Trip } from './trip';
+import { User } from './user';
+
+
+export interface Reservation {
+    id: number;
+    trip: Trip;
+    user: User;
+    seats: number;
+    paid: boolean;
+}
