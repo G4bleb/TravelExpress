@@ -9,4 +9,5 @@ export interface User {
     baggage: string;
     talk: string;
     smoke: boolean;
+    token: string;
 }
