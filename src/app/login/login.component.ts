@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     const user: User = this.form.value;
 
     this.loading = true;
-    this.userService.addUser(user)
+    this.userService.getUserByEmailAndPassword(user)
       .pipe(first())
       .subscribe(
         data => {

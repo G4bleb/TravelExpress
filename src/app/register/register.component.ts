@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    let user: User = this.form.value;
+    const user: User = this.form.value;
 
     this.loading = true;
     this.userService.addUser(user)
