@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PreferencesComponent } from './preferences/preferences.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { PreferencesComponent } from './preferences/preferences.component';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    PreferencesComponent
+    PreferencesComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
