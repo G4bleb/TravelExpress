@@ -1,11 +1,12 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Router, NavigationStart } from '@angular/router';
-import { Subscription } from 'rxjs';
+import {Component, OnInit, OnDestroy, Input} from '@angular/core';
+import {Router, NavigationStart} from '@angular/router';
+import {Subscription} from 'rxjs';
 
-import { Alert, AlertType } from '@app/entities';
-import { AlertService } from '@app/services';
+import {Alert, AlertType} from '@app/entities';
+import {AlertService} from '@app/services';
 
-@Component({ selector: 'alert', templateUrl: 'alert.component.html' })
+// tslint:disable-next-line:component-selector
+@Component({selector: 'alert', templateUrl: 'alert.component.html'})
 export class AlertComponent implements OnInit, OnDestroy {
   @Input() id = 'default-alert';
   @Input() fade = true;
@@ -14,7 +15,8 @@ export class AlertComponent implements OnInit, OnDestroy {
   alertSubscription: Subscription;
   routeSubscription: Subscription;
 
-  constructor(private router: Router, private alertService: AlertService) { }
+  constructor(private router: Router, private alertService: AlertService) {
+  }
 
   ngOnInit() {
     // subscribe to new alert notifications
@@ -55,7 +57,9 @@ export class AlertComponent implements OnInit, OnDestroy {
 
   removeAlert(alert: Alert) {
     // check if already removed to prevent error on auto close
-    if (!this.alerts.includes(alert)) return;
+    if (!this.alerts.includes(alert)) {
+      return;
+    }
 
     if (this.fade) {
       // fade out alert
@@ -72,7 +76,9 @@ export class AlertComponent implements OnInit, OnDestroy {
   }
 
   cssClass(alert: Alert) {
-    if (!alert) return;
+    if (!alert) {
+      return;
+    }
 
     const classes = ['alert', 'alert-dismissable', 'mt-4', 'container'];
 
@@ -81,7 +87,7 @@ export class AlertComponent implements OnInit, OnDestroy {
       [AlertType.Error]: 'alert alert-danger',
       [AlertType.Info]: 'alert alert-info',
       [AlertType.Warning]: 'alert alert-warning'
-    }
+    };
 
     classes.push(alertTypeClass[alert.type]);
 

@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {catchError, map, tap} from 'rxjs/operators';
 
-import { environment } from '@environments/environment';
-import { AlertService } from '@app/services/alert.service';
-import { User } from '@app/entities'
+import {environment} from '@environments/environment';
+import {AlertService} from '@app/services/alert.service';
+import {User} from '@app/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,7 @@ export class UserService {
   /** POST: add a new user to the server */
   register(user: User): Observable<User> {
     return this.http.post<User>(`${environment.apiUrl}/user`, user, this.httpOptions).pipe(
+      // tslint:disable-next-line:no-shadowed-variable
       tap((user: User) => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));
@@ -36,7 +37,7 @@ export class UserService {
       catchError(this.handleError<User>('Registration'))
     );
   }
-  
+
   /** POST : log in a user using his email and his password */
   login(mail: string, password: string): Observable<User> {
     return this.http.post<User>(`${environment.apiUrl}/user/login`, {mail, password}, this.httpOptions).pipe(
@@ -51,11 +52,11 @@ export class UserService {
   }
 
   /**
-  * Handle Http operation that failed.
-  * Let the app continue.
-  * @param operation - name of the operation that failed
-  * @param result - optional value to return as the observable result
-  */
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
