@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { PreferencesComponent } from './preferences/preferences.component';
+import { HomeComponent } from './home/home.component';
 
 // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
@@ -24,7 +25,8 @@ import { AlertComponent } from './alert/alert.component';
     LoginComponent,
     RegisterComponent,
     PreferencesComponent,
-    AlertComponent
+    AlertComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

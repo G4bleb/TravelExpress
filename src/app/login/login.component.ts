@@ -4,8 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { first } from 'rxjs/operators';
 
-import { environment } from '@environments/environment'
-
 import { User } from '@app/entities';
 import { UserService, AlertService } from '@app/services';
 
@@ -15,7 +13,6 @@ import { UserService, AlertService } from '@app/services';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   form: FormGroup;
   loading = false;
   submitted = false;
@@ -32,7 +29,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       mail: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
 
     // get return url from route parameters or default to '/'
@@ -68,5 +65,4 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         });
   }
-
 }

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class UserService {
   public user: Observable<User>;
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
   constructor(private http: HttpClient, private alertService: AlertService) {
@@ -37,6 +37,7 @@ export class UserService {
     );
   }
   
+  /** POST : log in a user using his email and his password */
   login(mail: string, password: string): Observable<User> {
     return this.http.post<User>(`${environment.apiUrl}/user/login`, {mail, password}, this.httpOptions).pipe(
       tap((user: User) => {

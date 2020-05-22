@@ -50,11 +50,11 @@
                 <input type="text" formControlName="vehicle" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.vehicle.errors }" />
                 <div *ngIf="submitted && f.vehicle.errors" class="invalid-feedback">
-                    <div *ngIf="f.vehicle.errors.required">Vehicle is required</div>
+                    <div *ngIf="f.vehicle.errors.required">Field required</div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="seats">Number of seats</label>
+                <label for="seats">Number of seats in your vehicle</label>
                 <input type="number" formControlName="seats" class="form-control" min="1" max="10"
                     [ngClass]="{ 'is-invalid': submitted && f.seats.errors }" />
                 <div *ngIf="submitted && f.seats.errors" class="invalid-feedback">
@@ -64,29 +64,29 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="baggage">Baggage</label>
+                <label for="baggage">Size of luggage allowed in you vehicle</label>
                 <select formControlName="baggage" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.baggage.errors }">
                     <option value="small">Small</option>
                     <option value="medium">Medium</option>
                     <option value="large">Large</option>
                 </select>
                 <div *ngIf="submitted && f.baggage.errors" class="invalid-feedback">
-                    <div *ngIf="f.baggage.errors.required">Field "Baggage" is required</div>
+                    <div *ngIf="f.baggage.errors.required">Field required</div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="talk">Talking</label>
+                <label for="talk">Do you like to talk with others ?</label>
                 <select formControlName="talk" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.talk.errors }">
                     <option value="yes">Yes</option>
                     <option value="little">Little</option>
                     <option value="no">No</option>
                 </select>
                 <div *ngIf="submitted && f.talk.errors" class="invalid-feedback">
-                    <div *ngIf="f.talk.errors.required">Field "Talking" is required</div>
+                    <div *ngIf="f.talk.errors.required">Field required</div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="smoke">Allows smoking</label>
+                <label for="smoke">Do you allow others to smoke when you drive ?</label>
                 <input type="checkbox" formControlName="smoke" class="form-control switch"
                     [ngClass]="{ 'is-invalid': submitted && f.smoke.errors }" />
             </div>
@@ -96,7 +96,7 @@
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                     Register
                 </button>
-                <a routerLink="../login" class="btn btn-link">Cancel</a>
+                <a routerLink="../login" class="btn btn-link">Login</a>
             </div>
         </form>
     </div>
