@@ -17,7 +17,7 @@ export class InMemoryDataService implements InMemoryDbService {
         lastName: "Doe",
         vehicle: "Fiat Multipla",
         seats: 3,
-        baggage: "medium",
+        luggageSize: "medium",
         talk: "no",
         smoke: false,
         token: "1231456",

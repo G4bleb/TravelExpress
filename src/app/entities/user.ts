@@ -6,7 +6,7 @@ export interface User {
     lastName: string;
     vehicle: string;
     seats: number;
-    baggage: string;
+    luggageSize: string;
     talk: string;
     smoke: boolean;
     token: string;

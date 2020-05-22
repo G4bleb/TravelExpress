@@ -64,14 +64,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="baggage">Size of luggage allowed in you vehicle</label>
-                <select formControlName="baggage" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.baggage.errors }">
+                <label for="luggageSize">Size of luggage allowed in you vehicle</label>
+                <select formControlName="luggageSize" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.luggageSize.errors }">
                     <option value="small">Small</option>
                     <option value="medium">Medium</option>
                     <option value="large">Large</option>
                 </select>
-                <div *ngIf="submitted && f.baggage.errors" class="invalid-feedback">
-                    <div *ngIf="f.baggage.errors.required">Field required</div>
+                <div *ngIf="submitted && f.luggageSize.errors" class="invalid-feedback">
+                    <div *ngIf="f.luggageSize.errors.required">Field required</div>
                 </div>
             </div>
             <div class="form-group">
