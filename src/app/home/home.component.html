@@ -7,8 +7,10 @@
         <p>Search for your trip using your starting point and your ending point, and simply buy a seat in a vehicle.</p>
         <p>You have no account ? Don't worry, you can always search for trips anonymously and register if you're
             interested in one !</p>
-        <h6><a routerLink="/" class="btn btn-primary">Find a trip</a></h6>
-        <h6><a routerLink="../register" class="btn btn-primary">Register</a></h6>
-        <h6><a routerLink="../login" class="btn btn-primary">Login</a></h6>
+        <h6>
+            <a routerLink="/" class="btn btn-primary mr-2">Find a trip</a>
+            <a *ngIf="getUser() == undefined" routerLink="../login" class="btn btn-primary mr-2">Login</a>
+            <a *ngIf="getUser() == undefined" routerLink="../register" class="btn btn-primary mr-2">Register</a>
+        </h6>
     </div>
 </div>

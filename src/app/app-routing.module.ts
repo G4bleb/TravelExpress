@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
@@ -9,18 +9,18 @@ import {SearchTripComponent} from '@app/trip/search/search.component';
 
 
 const routes: Routes = [
-  {path: 'register', component: RegisterComponent},
-  {path: 'login', component: LoginComponent},
-  {path: '', component: HomeComponent},
-  {path: 'preferences', component: PreferencesComponent},
-  {path: 'trip/create', component: CreateTripComponent},
-  {path: 'trip/search', component: SearchTripComponent}
-  // { path: '', redirectTo: 'home', pathMatch: 'full'}
+    {path: 'register', component: RegisterComponent},
+    {path: 'login', component: LoginComponent},
+    {path: '', component: HomeComponent},
+    {path: 'preferences', component: PreferencesComponent},
+    {path: 'trip/create', component: CreateTripComponent},
+    {path: 'trip/search', component: SearchTripComponent}
+    // { path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule {
 }

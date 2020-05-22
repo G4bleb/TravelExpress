@@ -1,1 +1,32 @@
-<p>preferences works!</p>
+<div class="card mt-5 mb-5">
+    <h4 class="card-header">My Preferences</h4>
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <div class="form-group col-12">
+                <label for="talk">Do you like to talk with others ?</label>
+                <select formControlName="talk" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f.talk.errors }">
+                    <option value="yes">Yes</option>
+                    <option value="little">Little</option>
+                    <option value="no">No</option>
+                </select>
+                <div *ngIf="submitted && f.talk.errors" class="invalid-feedback">
+                    <div *ngIf="f.talk.errors.required">Field required</div>
+                </div>
+            </div>
+            <div class="form-group col-12">
+                <label for="smoke">Do you allow others to smoke when you drive ?</label>
+                <input type="checkbox" formControlName="smoke" class="form-control switch" style="width: 40px"
+                       [ngClass]="{ 'is-invalid': submitted && f.smoke.errors }"/>
+            </div>
+            <div class="form-group col-12">
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Edit my preferences
+                </button>
+                <a routerLink="/" class="btn btn-link">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
