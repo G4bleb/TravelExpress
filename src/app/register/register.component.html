@@ -4,7 +4,7 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="mail">E-Mail address</label>
-                <input type="text" formControlName="mail" class="form-control"
+                <input type="email" formControlName="mail" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.mail.errors }" />
                 <div *ngIf="submitted && f.mail.errors" class="invalid-feedback">
                     <div *ngIf="f.mail.errors.required">E-Mail address is required</div>
@@ -12,7 +12,7 @@
             </div>
             <div class="form-group">
                 <label for="tel">Phone number</label>
-                <input type="text" formControlName="tel" class="form-control"
+                <input type="tel" formControlName="tel" class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && f.tel.errors }" />
                 <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
                     <div *ngIf="f.tel.errors.required">Phone number is required</div>
@@ -33,6 +33,7 @@
                     [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
                 <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
                     <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                    <div *ngIf="f.firstName.errors.minlength">First Name must be at least 2 characters</div>
                 </div>
             </div>
             <div class="form-group">
@@ -41,6 +42,7 @@
                     [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
                 <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
                     <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                    <div *ngIf="f.lastName.errors.minlength">Last Name must be at least 2 characters</div>
                 </div>
             </div>
             <div class="form-group">
@@ -53,7 +55,7 @@
             </div>
             <div class="form-group">
                 <label for="seats">Number of seats</label>
-                <input type="text" formControlName="seats" class="form-control"
+                <input type="number" formControlName="seats" class="form-control" min="1" max="10"
                     [ngClass]="{ 'is-invalid': submitted && f.seats.errors }" />
                 <div *ngIf="submitted && f.seats.errors" class="invalid-feedback">
                     <div *ngIf="f.seats.errors.required">Number of seats is required</div>
@@ -63,27 +65,30 @@
             </div>
             <div class="form-group">
                 <label for="baggage">Baggage</label>
-                <input type="text" formControlName="baggage" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.baggage.errors }" />
+                <select formControlName="baggage" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.baggage.errors }">
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
                 <div *ngIf="submitted && f.baggage.errors" class="invalid-feedback">
                     <div *ngIf="f.baggage.errors.required">Field "Baggage" is required</div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="talk">Talking</label>
-                <input type="text" formControlName="talk" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && f.talk.errors }" />
+                <select formControlName="talk" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.talk.errors }">
+                    <option value="yes">Yes</option>
+                    <option value="little">Little</option>
+                    <option value="no">No</option>
+                </select>
                 <div *ngIf="submitted && f.talk.errors" class="invalid-feedback">
                     <div *ngIf="f.talk.errors.required">Field "Talking" is required</div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="smoke">Allows smoking</label>
-                <input type="text" formControlName="smoke" class="form-control"
+                <input type="checkbox" formControlName="smoke" class="form-control switch"
                     [ngClass]="{ 'is-invalid': submitted && f.smoke.errors }" />
-                <div *ngIf="submitted && f.smoke.errors" class="invalid-feedback">
-                    <div *ngIf="f.smoke.errors.required">Field "Allows smoking" is required</div>
-                </div>
             </div>
             
             <div class="form-group">

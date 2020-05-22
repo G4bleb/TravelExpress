@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { first } from 'rxjs/operators';
 
-import { User } from '../entities';
-import { UserService, AlertService } from '../services';
+import { User } from '@app/entities';
+import { UserService, AlertService } from '@app/services';
 
 @Component({
   selector: 'app-register',
@@ -32,12 +32,13 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(2)]],
-      vehicle: ['', Validators.nullValidator],
+      vehicle: [''],
       seats: ['', [Validators.min(1), Validators.max(10)]],
       baggage: ['', Validators.required],
       talk: ['', Validators.required],
-      smoke: ['', Validators.required],
+      smoke: [''],
     });
+    this.form.controls
   }
   
   onSubmit(): void {
@@ -54,12 +55,18 @@ export class RegisterComponent implements OnInit {
     let user:User = this.form.value;
 
     this.loading = true;
-    this.userService.addUser(user)
+    this.userService.register(user)
       .pipe(first())
       .subscribe(
         data => {
-          this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-          this.router.navigate(['../login'], { relativeTo: this.route });
+          this.loading = false;
+          if (data === undefined) {//login failed
+            // this.alertService.error('Registration failed');
+          }else{
+            this.alertService.success('Registration successful', { keepAfterRouteChange: true });
+            this.router.navigate(['../login'], { relativeTo: this.route });
+          }
+          
         },
         error => {
           this.alertService.error(error);
