@@ -32,7 +32,7 @@ export class UserService {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
-                this.log(`registered user w/ id=${user.id}`);
+                this.log(`registered user w/ id=${user._id}`);
             }),
             catchError(this.handleError<User>('Registration'))
         );
@@ -45,7 +45,7 @@ export class UserService {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
-                this.log(`logged with user w/ id=${user.id}`);
+                this.log(`logged with user w/ id=${user._id}`);
             }),
             catchError(this.handleError<User>('Login'))
         );
@@ -62,7 +62,7 @@ export class UserService {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
-                this.log(`updated user w/ id=${user.id}`);
+                this.log(`updated user w/ id=${user._id}`);
             }),
             catchError(this.handleError<User>('EditPreferences'))
         );

@@ -2,104 +2,107 @@
     <h4 class="card-header">Register</h4>
     <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="form-group col-12">
-                <label for="mail">E-Mail address</label>
-                <input type="email" formControlName="mail" class="form-control"
-                       [ngClass]="{ 'is-invalid': submitted && f.mail.errors }"/>
-                <div *ngIf="submitted && f.mail.errors" class="invalid-feedback">
-                    <div *ngIf="f.mail.errors.required">E-Mail address is required</div>
+            <div class="row">
+                <div class="form-group col-12">
+                    <label for="mail">E-Mail address</label>
+                    <input type="email" formControlName="mail" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.mail.errors }"/>
+                    <div *ngIf="submitted && f.mail.errors" class="invalid-feedback">
+                        <div *ngIf="f.mail.errors.required">E-Mail address is required</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-12">
-                <label for="tel">Phone number</label>
-                <input type="tel" pattern="/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im"
-                       formControlName="tel"
-                       class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tel.errors }"/>
-                <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
-                    <div *ngIf="f.tel.errors.required">Phone number is required</div>
+                <div class="form-group col-12">
+                    <label for="tel">Phone number</label>
+                    <input type="tel" pattern="/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im"
+                           formControlName="tel" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.tel.errors }"/>
+                    <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
+                        <div *ngIf="f.tel.errors.required">Phone number is required</div>
+                        <div *ngIf="f.tel.errors.pattern">Phone number doesn't respect pattern</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-12">
-                <label for="password">Password</label>
-                <input type="password" formControlName="password" class="form-control"
-                       [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
-                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                <div class="form-group col-12">
+                    <label for="password">Password</label>
+                    <input type="password" formControlName="password" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Password is required</div>
+                        <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-12">
-                <label for="firstName">First Name</label>
-                <input type="text" formControlName="firstName" class="form-control"
-                       [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"/>
-                <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                    <div *ngIf="f.firstName.errors.required">First Name is required</div>
-                    <div *ngIf="f.firstName.errors.minlength">First Name must be at least 2 characters</div>
+                <div class="form-group col-12">
+                    <label for="firstName">First Name</label>
+                    <input type="text" formControlName="firstName" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"/>
+                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                        <div *ngIf="f.firstName.errors.minlength">First Name must be at least 2 characters</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-12">
-                <label for="lastName">Last Name</label>
-                <input type="text" formControlName="lastName" class="form-control"
-                       [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
-                <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                    <div *ngIf="f.lastName.errors.required">Last Name is required</div>
-                    <div *ngIf="f.lastName.errors.minlength">Last Name must be at least 2 characters</div>
+                <div class="form-group col-12">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" formControlName="lastName" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
+                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                        <div *ngIf="f.lastName.errors.minlength">Last Name must be at least 2 characters</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-12">
-                <label for="vehicle">Vehicle</label>
-                <input type="text" formControlName="vehicle" class="form-control"
-                       [ngClass]="{ 'is-invalid': submitted && f.vehicle.errors }"/>
-                <div *ngIf="submitted && f.vehicle.errors" class="invalid-feedback">
-                    <div *ngIf="f.vehicle.errors.required">Field required</div>
+                <div class="form-group col-12">
+                    <label for="vehicle">Vehicle</label>
+                    <input type="text" formControlName="vehicle" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.vehicle.errors }"/>
+                    <div *ngIf="submitted && f.vehicle.errors" class="invalid-feedback">
+                        <div *ngIf="f.vehicle.errors.required">Field required</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-12">
-                <label for="seats">Number of seats in your vehicle</label>
-                <input type="number" formControlName="seats" class="form-control" min="1" max="10"
-                       [ngClass]="{ 'is-invalid': submitted && f.seats.errors }"/>
-                <div *ngIf="submitted && f.seats.errors" class="invalid-feedback">
-                    <div *ngIf="f.seats.errors.required">Number of seats is required</div>
-                    <div *ngIf="f.seats.errors.minlength">Number of seats must be at least 1</div>
-                    <div *ngIf="f.seats.errors.maxlength">Number of seats must be at most 10</div>
+                <div class="form-group col-12">
+                    <label for="seats">Number of seats in your vehicle</label>
+                    <input type="number" formControlName="seats" class="form-control" min="1" max="10"
+                           [ngClass]="{ 'is-invalid': submitted && f.seats.errors }"/>
+                    <div *ngIf="submitted && f.seats.errors" class="invalid-feedback">
+                        <div *ngIf="f.seats.errors.required">Number of seats is required</div>
+                        <div *ngIf="f.seats.errors.minlength">Number of seats must be at least 1</div>
+                        <div *ngIf="f.seats.errors.maxlength">Number of seats must be at most 10</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-12">
-                <label for="luggageSize">Size of luggage allowed in you vehicle</label>
-                <select formControlName="luggageSize" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.luggageSize.errors }">
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
-                </select>
-                <div *ngIf="submitted && f.luggageSize.errors" class="invalid-feedback">
-                    <div *ngIf="f.luggageSize.errors.required">Field required</div>
+                <div class="form-group col-12">
+                    <label for="luggageSize">Size of luggage allowed in you vehicle</label>
+                    <select formControlName="luggageSize" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.luggageSize.errors }">
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                    <div *ngIf="submitted && f.luggageSize.errors" class="invalid-feedback">
+                        <div *ngIf="f.luggageSize.errors.required">Field required</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-12">
-                <label for="talk">Do you like to talk with others ?</label>
-                <select formControlName="talk" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.talk.errors }">
-                    <option value="yes">Yes</option>
-                    <option value="little">Little</option>
-                    <option value="no">No</option>
-                </select>
-                <div *ngIf="submitted && f.talk.errors" class="invalid-feedback">
-                    <div *ngIf="f.talk.errors.required">Field required</div>
+                <div class="form-group col-12">
+                    <label for="talk">Do you like to talk with others ?</label>
+                    <select formControlName="talk" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.talk.errors }">
+                        <option value="yes">Yes</option>
+                        <option value="little">Little</option>
+                        <option value="no">No</option>
+                    </select>
+                    <div *ngIf="submitted && f.talk.errors" class="invalid-feedback">
+                        <div *ngIf="f.talk.errors.required">Field required</div>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group col-12">
-                <label for="smoke">Do you allow others to smoke when you drive ?</label>
-                <input type="checkbox" formControlName="smoke" class="form-control switch" style="width: 40px"
-                       [ngClass]="{ 'is-invalid': submitted && f.smoke.errors }"/>
-            </div>
+                <div class="form-group col-12">
+                    <label for="smoke">Do you allow others to smoke when you drive ?</label>
+                    <input type="checkbox" formControlName="smoke" class="form-control switch" style="width: 40px"
+                           [ngClass]="{ 'is-invalid': submitted && f.smoke.errors }"/>
+                </div>
 
-            <div class="form-group col-12">
-                <button [disabled]="loading" class="btn btn-primary">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Register
-                </button>
-                <a routerLink="../login" class="btn btn-link">Login</a>
+                <div class="form-group col-12">
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Register
+                    </button>
+                    <a routerLink="../login" class="btn btn-link">Login</a>
+                </div>
             </div>
         </form>
     </div>

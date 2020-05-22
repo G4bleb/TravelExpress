@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     ngOnInit(): void {
         this.form = this.formBuilder.group({
             mail: ['', [Validators.email, Validators.required]],
-            tel: ['', Validators.required],
+            tel: ['', [Validators.required, Validators.pattern('/^[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}$/im')]],
             password: ['', [Validators.required, Validators.minLength(6)]],
             firstName: ['', [Validators.required, Validators.minLength(2)]],
             lastName: ['', [Validators.required, Validators.minLength(2)]],
@@ -65,7 +65,7 @@ export class RegisterComponent implements OnInit {
                     // this.alertService.error('Registration failed');//alert is already done in userService
                 } else {
                     this.alertService.success('Registration successful', {keepAfterRouteChange: true});
-                    this.router.navigate(['../login'], {relativeTo: this.route});
+                    this.router.navigate(['/'], {relativeTo: this.route});
                 }
             },
             error => {

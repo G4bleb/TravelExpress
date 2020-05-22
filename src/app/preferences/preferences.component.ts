@@ -25,9 +25,9 @@ export class PreferencesComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({
-            vehicle: [''],
-            seats: ['', [Validators.min(1), Validators.max(10)]],
-            luggageSize: ['', Validators.nullValidator],
+            // vehicle: [''],
+            // seats: ['', [Validators.min(1), Validators.max(10)]],
+            // luggageSize: ['', Validators.nullValidator],
             talk: ['', Validators.required],
             smoke: [''],
         });

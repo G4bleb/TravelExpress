@@ -28,6 +28,6 @@ export class InMemoryDataService implements InMemoryDbService {
 
     // Overrides the genId method to ensure that a user always has an id.
     genId(users: User[]): string {
-        return users.length > 0 ? Math.max(...users.map(user => +user.id)).toString() : '11';
+        return users.length > 0 ? Math.max(...users.map(user => +user._id)).toString() : '11';
     }
 }

@@ -3,7 +3,7 @@ import {User} from './user';
 
 
 export interface Reservation {
-    id: number;
+    _id: number;
     trip: Trip;
     user: User;
     seats: number;
