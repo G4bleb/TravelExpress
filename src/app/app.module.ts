@@ -9,7 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
-import {ProfileComponent} from './preferences/profile.component';
+import {ProfileComponent} from './profile/profile.component';
 import {HomeComponent} from './home/home.component';
 // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
 // and returns simulated server responses.

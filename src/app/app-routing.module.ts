@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
-import {ProfileComponent} from '@app/preferences/profile.component';
+import {ProfileComponent} from '@app/profile/profile.component';
 import {CreateTripComponent} from '@app/trip/create/create.component';
 import {SearchTripComponent} from '@app/trip/search/search.component';
 
