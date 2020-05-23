@@ -3,7 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
 import {HomeComponent} from './home/home.component';
-import {PreferencesComponent} from '@app/preferences/preferences.component';
+import {ProfileComponent} from '@app/preferences/profile.component';
 import {CreateTripComponent} from '@app/trip/create/create.component';
 import {SearchTripComponent} from '@app/trip/search/search.component';
 
@@ -12,7 +12,7 @@ const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     {path: 'login', component: LoginComponent},
     {path: '', component: HomeComponent},
-    {path: 'preferences', component: PreferencesComponent},
+    {path: 'profile', component: ProfileComponent},
     {path: 'trip/create', component: CreateTripComponent},
     {path: 'trip/search', component: SearchTripComponent}
     // { path: '', redirectTo: 'home', pathMatch: 'full'}

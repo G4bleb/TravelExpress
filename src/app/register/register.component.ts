@@ -61,9 +61,7 @@ export class RegisterComponent implements OnInit {
         this.userService.register(user).pipe(first()).subscribe(
             data => {
                 this.loading = false;
-                if (data === undefined) {// register failed
-                    // this.alertService.error('Registration failed');//alert is already done in userService
-                } else {
+                if (data !== undefined) { // Register succeeded
                     this.alertService.success('Registration successful', {keepAfterRouteChange: true});
                     this.router.navigate(['/'], {relativeTo: this.route});
                 }

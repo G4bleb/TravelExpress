@@ -54,7 +54,8 @@ export class LoginComponent implements OnInit {
         this.userService.login(this.f.mail.value, this.f.password.value).pipe(first()).subscribe(
             data => {
                 this.loading = false;
-                if (data !== undefined) {// login failed
+                if (data !== undefined) { // login succeeded
+                    this.alertService.success('Login successful', {keepAfterRouteChange: true});
                     this.router.navigate([this.returnUrl]);
                 }
             },

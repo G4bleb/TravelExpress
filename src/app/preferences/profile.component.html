@@ -1,5 +1,5 @@
 <div class="card mt-5 mb-5">
-    <h4 class="card-header">Register</h4>
+    <h4 class="card-header">My profile</h4>
     <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <h5 class="card-title">Personal informations</h5>
@@ -24,11 +24,12 @@
                 </div>
                 <div class="form-group col-12">
                     <label for="password">Password</label>
-                    <input type="password" formControlName="password" class="form-control"
-                           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+                    <input type="password" autocomplete="current-password" formControlName="password"
+                           class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
                     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                         <div *ngIf="f.password.errors.required">Password is required</div>
                         <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                        <div *ngIf="f.password.errors.incorrect">Wrong password</div>
                     </div>
                 </div>
                 <div class="form-group col-12">
@@ -105,12 +106,11 @@
                 <div class="form-group col-12">
                     <button [disabled]="loading" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                        Register
+                        Update profile
                     </button>
-                    <a routerLink="../login" class="btn btn-link">Login</a>
+                    <a routerLink="/" class="btn btn-link">Back to home</a>
                 </div>
             </div>
         </form>
     </div>
 </div>
-

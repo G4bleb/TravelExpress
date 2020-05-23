@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AlertService, TripService} from '@app/services';
 import {Trip, User} from '@app/entities';
+import {first} from 'rxjs/operators';
 
 @Component({
     selector: 'app-create',
@@ -56,6 +57,18 @@ export class CreateTripComponent implements OnInit {
         const trip: Trip = this.form.value;
 
         this.loading = true;
-        // TODO submit to tripService
+        this.tripService.createTrip(trip).pipe(first()).subscribe(
+            data => {
+                this.loading = false;
+                if (data !== undefined) {// create succeeded
+                    this.alertService.success('Trip successfully created', {keepAfterRouteChange: true});
+                    this.router.navigate([this.returnUrl]);
+                }
+            },
+            error => {
+                this.alertService.error(error);
+                this.loading = false;
+            }
+        );
     }
 }

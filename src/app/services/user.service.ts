@@ -52,17 +52,15 @@ export class UserService {
     }
 
     /** PUT : edit the preferences for the current user */
-    // TODO Vérifier si token au bon endroit dans la requête
-    editPreferences(smoke: boolean, talk: string): Observable<User> {
-        const jwt = (JSON.parse(localStorage.getItem('user')) as User).token;
-        return this.http.put<User>(`${environment.apiUrl}/user`, {smoke, talk}, {
-            headers: new HttpHeaders({'Content-Type': 'application/json'}).set('Authorization', 'BEARER <' + jwt + '>'),
+    editPreferences(user: User): Observable<User> {
+        return this.http.put<User>(`${environment.apiUrl}/user`, user, {
+            headers: new HttpHeaders({'Content-Type': 'application/json'}).set('Authorization', 'BEARER <' + user.token + '>'),
         }).pipe(
-            tap((user: User) => {
+            tap((returnedUser: User) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
-                this.userSubject.next(user);
-                this.log(`updated user w/ id=${user._id}`);
+                localStorage.setItem('user', JSON.stringify(returnedUser));
+                this.userSubject.next(returnedUser);
+                this.log(`updated user w/ id=${returnedUser._id}`);
             }),
             catchError(this.handleError<User>('EditPreferences'))
         );

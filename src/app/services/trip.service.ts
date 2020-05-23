@@ -1,27 +1,36 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {Trip} from '@app/entities';
+import {Trip, User} from '@app/entities';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AlertService} from '@app/services/alert.service';
+import {environment} from '@environments/environment';
+import {catchError, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TripService {
-    /*private tripSubject: BehaviorSubject<Trip>;
-    public trip: Observable<Trip>;*/
 
     httpOptions = {
         headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
 
     constructor(private http: HttpClient, private alertService: AlertService) {
-        /*this.userSubject = new BehaviorSubject<Trip>(JSON.parse(localStorage.getItem('user')));
-        this.user = this.userSubject.asObservable();*/
+
     }
 
+    /** POST create a trip */
     createTrip(trip: Trip) {
-
+        const user: User = JSON.parse(localStorage.getItem('user'));
+        return this.http.post<Trip>(`${environment.apiUrl}/trip`, trip, {
+            headers: new HttpHeaders({'Content-Type': 'application/json'}).set('Authorization', 'BEARER <' + user.token + '>'),
+        }).pipe(
+            // tslint:disable-next-line:no-shadowed-variable
+            tap((trip: Trip) => {
+                this.log(`created trip w/ id=${trip._id}`);
+            }),
+            catchError(this.handleError<User>('Registration'))
+        );
     }
 
     findTrips() {
