@@ -9,8 +9,8 @@
             interested in one !</p>
         <h6>
             <a routerLink="../trip/search" class="btn btn-primary mr-2">Find a trip</a>
-            <a *ngIf="getUser() == undefined" routerLink="../login" class="btn btn-primary mr-2">Login</a>
-            <a *ngIf="getUser() == undefined" routerLink="../register" class="btn btn-primary mr-2">Register</a>
+            <a *ngIf="getUser() == undefined" href="../login" class="btn btn-primary mr-2">Login</a>
+            <a *ngIf="getUser() == undefined" href="../register" class="btn btn-primary mr-2">Register</a>
         </h6>
     </div>
 </div>

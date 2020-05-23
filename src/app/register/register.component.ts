@@ -31,16 +31,16 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({
-            mail: ['', [Validators.email, Validators.required]],
+            email: ['', [Validators.email, Validators.required]],
             tel: ['', [Validators.required, Validators.pattern('[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}')]],
             password: ['', [Validators.required, Validators.minLength(6)]],
             firstName: ['', [Validators.required, Validators.minLength(2)]],
             lastName: ['', [Validators.required, Validators.minLength(2)]],
-            vehicle: [''],
-            seats: ['', [Validators.min(1), Validators.max(10)]],
-            luggageSize: ['', Validators.nullValidator],
+            vehicle: [null],
+            seats: [null, [Validators.min(1), Validators.max(10)]],
+            luggageSize: [null],
             talk: ['', Validators.required],
-            smoke: [''],
+            smoke: [false],
         });
     }
 
@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit {
                 this.loading = false;
                 if (data !== undefined) { // Register succeeded
                     this.alertService.success('Registration successful', {keepAfterRouteChange: true});
-                    this.router.navigate(['/'], {relativeTo: this.route});
+                    window.location.href = '/';
                 }
             },
             error => {
@@ -71,5 +71,23 @@ export class RegisterComponent implements OnInit {
                 this.loading = false;
             }
         );
+    }
+
+    showSeatsAndLuggages() {
+        if (this.f.vehicle.value !== '') {
+            if (document.getElementById('div-luggages').classList.contains('d-none')) {
+                document.getElementById('div-luggages').classList.remove('d-none');
+            }
+            if (document.getElementById('div-seats').classList.contains('d-none')) {
+                document.getElementById('div-seats').classList.remove('d-none');
+            }
+        } else {
+            if (!document.getElementById('div-luggages').classList.contains('d-none')) {
+                document.getElementById('div-luggages').classList.add('d-none');
+            }
+            if (!document.getElementById('div-seats').classList.contains('d-none')) {
+                document.getElementById('div-seats').classList.add('d-none');
+            }
+        }
     }
 }

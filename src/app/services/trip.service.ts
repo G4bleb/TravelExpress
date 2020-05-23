@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Trip, User} from '@app/entities';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AlertService} from '@app/services/alert.service';
 import {environment} from '@environments/environment';
 import {catchError, tap} from 'rxjs/operators';
+import {UserService} from '@app/services/user.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,13 +16,15 @@ export class TripService {
         headers: new HttpHeaders({'Content-Type': 'application/json'})
     };
 
-    constructor(private http: HttpClient, private alertService: AlertService) {
+    constructor(private http: HttpClient,
+                private alertService: AlertService,
+                private userService: UserService) {
 
     }
 
     /** POST create a trip */
     createTrip(trip: Trip) {
-        const user: User = JSON.parse(localStorage.getItem('user'));
+        const user: User = this.userService.getSessionUser();
         return this.http.post<Trip>(`${environment.apiUrl}/trip`, trip, {
             headers: new HttpHeaders({'Content-Type': 'application/json'}).set('Authorization', 'BEARER <' + user.token + '>'),
         }).pipe(

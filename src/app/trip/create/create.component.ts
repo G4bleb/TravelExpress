@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService, TripService} from '@app/services';
-import {Trip, User} from '@app/entities';
+import {AlertService, TripService, UserService} from '@app/services';
+import {Trip} from '@app/entities';
 import {first} from 'rxjs/operators';
 
 @Component({
@@ -21,12 +21,13 @@ export class CreateTripComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private tripService: TripService,
-        private alertService: AlertService) {
+        private alertService: AlertService,
+        private userService: UserService) {
     }
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({
-            user: [JSON.parse(localStorage.getItem('user')) as User],
+            user: [this.userService.getSessionUser()],
             fromLocation: ['', Validators.required],
             toLocation: ['', Validators.required],
             fromDate: ['', Validators.required],
@@ -62,7 +63,7 @@ export class CreateTripComponent implements OnInit {
                 this.loading = false;
                 if (data !== undefined) {// create succeeded
                     this.alertService.success('Trip successfully created', {keepAfterRouteChange: true});
-                    this.router.navigate([this.returnUrl]);
+                    window.location.href = this.returnUrl;
                 }
             },
             error => {

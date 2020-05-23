@@ -28,19 +28,19 @@ export class UserService {
     register(user: User): Observable<User> {
         return this.http.post<User>(`${environment.apiUrl}/user`, user, this.httpOptions).pipe(
             // tslint:disable-next-line:no-shadowed-variable
-            tap((user: User) => {
+            tap((returnedUser: User) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(user));
-                this.userSubject.next(user);
-                this.log(`registered user w/ id=${user._id}`);
+                localStorage.setItem('user', JSON.stringify(returnedUser));
+                this.userSubject.next(returnedUser);
+                this.log(`registered user w/ id=${returnedUser._id}`);
             }),
             catchError(this.handleError<User>('Registration'))
         );
     }
 
     /** POST : log in a user using his email and his password */
-    login(mail: string, password: string): Observable<User> {
-        return this.http.post<User>(`${environment.apiUrl}/user/login`, {mail, password}, this.httpOptions).pipe(
+    login(email: string, password: string): Observable<User> {
+        return this.http.post<User>(`${environment.apiUrl}/user/login`, {email, password}, this.httpOptions).pipe(
             tap((user: User) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
@@ -52,7 +52,7 @@ export class UserService {
     }
 
     /** PUT : edit the preferences for the current user */
-    editPreferences(user: User): Observable<User> {
+    editProfile(user: User): Observable<User> {
         return this.http.put<User>(`${environment.apiUrl}/user`, user, {
             headers: new HttpHeaders({'Content-Type': 'application/json'}).set('Authorization', 'BEARER <' + user.token + '>'),
         }).pipe(
@@ -64,6 +64,10 @@ export class UserService {
             }),
             catchError(this.handleError<User>('EditPreferences'))
         );
+    }
+
+    getSessionUser(): User {
+        return this.userSubject.getValue();
     }
 
     /**

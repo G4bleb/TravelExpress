@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-    <a class="navbar-brand" routerLink="/">TravelExpress</a>
+    <a class="navbar-brand" href="/">TravelExpress</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -26,19 +26,19 @@
         </ul>
         <ul class="navbar-nav nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" routerLink="trip/search">Find a trip</a>
+                <a class="nav-link" href="trip/search">Find a trip</a>
             </li>
             <li *ngIf="getUser() != undefined" class="nav-item active">
-                <a class="nav-link" routerLink="trip/create">Create a trip</a>
+                <a class="nav-link" href="trip/create">Create a trip</a>
             </li>
             <li *ngIf="getUser() != undefined" class="nav-item active">
-                <a class="nav-link" routerLink="preferences">Preferences</a>
+                <a class="nav-link" href="profile">Profile</a>
             </li>
             <li *ngIf="getUser() == undefined" class="nav-item active">
-                <a class="nav-link" routerLink="login">Login</a>
+                <a class="nav-link" href="login">Login</a>
             </li>
             <li *ngIf="getUser() == undefined" class="nav-item active">
-                <a class="nav-link" routerLink="register">Register</a>
+                <a class="nav-link" href="register">Register</a>
             </li>
             <li *ngIf="getUser() != undefined" class="nav-item active">
                 <a class="nav-link" style="cursor: pointer" (click)="logout()">Logout</a>

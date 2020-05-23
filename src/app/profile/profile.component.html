@@ -5,16 +5,16 @@
             <h5 class="card-title">Personal informations</h5>
             <div class="row mb-3">
                 <div class="form-group col-12">
-                    <label for="mail">E-Mail address</label>
-                    <input type="email" formControlName="mail" class="form-control"
-                           [ngClass]="{ 'is-invalid': submitted && f.mail.errors }"/>
-                    <div *ngIf="submitted && f.mail.errors" class="invalid-feedback">
-                        <div *ngIf="f.mail.errors.required">E-Mail address is required</div>
+                    <label for="email">E-Mail address *</label>
+                    <input type="email" formControlName="email" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">E-Mail address is required</div>
                     </div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="tel">Phone number</label>
-                    <input type="tel" pattern="/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/im"
+                    <label for="tel">Phone number *</label>
+                    <input type="tel" pattern="[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}"
                            formControlName="tel" class="form-control"
                            [ngClass]="{ 'is-invalid': submitted && f.tel.errors }"/>
                     <div *ngIf="submitted && f.tel.errors" class="invalid-feedback">
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="password">Password</label>
+                    <label for="password">Password *</label>
                     <input type="password" autocomplete="current-password" formControlName="password"
                            class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
                     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="firstName">First Name</label>
+                    <label for="firstName">First Name *</label>
                     <input type="text" formControlName="firstName" class="form-control"
                            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"/>
                     <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="lastName">Last Name</label>
+                    <label for="lastName">Last Name *</label>
                     <input type="text" formControlName="lastName" class="form-control"
                            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
                     <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
@@ -56,12 +56,13 @@
                 <div class="form-group col-12">
                     <label for="vehicle">Vehicle</label>
                     <input type="text" formControlName="vehicle" class="form-control"
+                           (ngModelChange)="showSeatsAndLuggages()"
                            [ngClass]="{ 'is-invalid': submitted && f.vehicle.errors }"/>
                     <div *ngIf="submitted && f.vehicle.errors" class="invalid-feedback">
                         <div *ngIf="f.vehicle.errors.required">Field required</div>
                     </div>
                 </div>
-                <div class="form-group col-12">
+                <div id="div-seats" class="form-group col-12 d-none">
                     <label for="seats">Number of seats in your vehicle</label>
                     <input type="number" formControlName="seats" class="form-control" min="1" max="10"
                            [ngClass]="{ 'is-invalid': submitted && f.seats.errors }"/>
@@ -71,7 +72,7 @@
                         <div *ngIf="f.seats.errors.maxlength">Number of seats must be at most 10</div>
                     </div>
                 </div>
-                <div class="form-group col-12">
+                <div id="div-luggages" class="form-group col-12 d-none">
                     <label for="luggageSize">Size of luggage allowed in you vehicle</label>
                     <select formControlName="luggageSize" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.luggageSize.errors }">
@@ -87,7 +88,7 @@
             <h5 class="card-title">Other</h5>
             <div class="row">
                 <div class="form-group col-12">
-                    <label for="talk">Do you like to talk with others ?</label>
+                    <label for="talk">Do you like to talk with others ? *</label>
                     <select formControlName="talk" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.talk.errors }">
                         <option value="yes">Yes</option>
@@ -99,7 +100,7 @@
                     </div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="smoke">Do you allow others to smoke when you drive ?</label>
+                    <label for="smoke">Do you allow others to smoke when you drive ? *</label>
                     <input type="checkbox" formControlName="smoke" class="form-control switch" style="width: 40px"
                            [ngClass]="{ 'is-invalid': submitted && f.smoke.errors }"/>
                 </div>

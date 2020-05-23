@@ -4,11 +4,11 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="form-group col-12">
-                    <label for="mail">E-Mail address</label>
-                    <input type="email" formControlName="mail" class="form-control"
-                           [ngClass]="{ 'is-invalid': submitted && f.mail.errors }"/>
-                    <div *ngIf="submitted && f.mail.errors" class="invalid-feedback">
-                        <div *ngIf="f.mail.errors.required">E-Mail address is required</div>
+                    <label for="email">E-Mail address</label>
+                    <input type="email" formControlName="email" class="form-control"
+                           [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">E-Mail address is required</div>
                     </div>
                 </div>
                 <div class="form-group col-12">
