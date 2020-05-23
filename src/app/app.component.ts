@@ -10,12 +10,11 @@ import {UserService} from '@app/services';
 export class AppComponent {
     title = 'TravelExpress';
 
-    constructor(private router: Router,
-                private userService: UserService) {
+    constructor(private router: Router) {
     }
 
     getUser() {
-        return this.userService.getSessionUser();
+        return localStorage.getItem('user');
     }
 
     logout() {

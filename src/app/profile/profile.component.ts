@@ -39,8 +39,6 @@ export class ProfileComponent implements OnInit {
             smoke: [false],
         });
 
-        console.log(this.userService.getSessionUser());
-
         this.form.controls.email.setValue(currentUser.email);
         this.form.controls.tel.setValue(currentUser.tel);
         this.form.controls.firstName.setValue(currentUser.firstName);

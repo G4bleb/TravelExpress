@@ -25,44 +25,45 @@ export class UserService {
     }
 
     /** POST: add a new user to the server */
-    register(user: User): Observable<User> {
-        return this.http.post<User>(`${environment.apiUrl}/user`, user, this.httpOptions).pipe(
+    register(user: User): Observable<{ user: User }> {
+        return this.http.post<{ user: User }>(`${environment.apiUrl}/user`, user, this.httpOptions).pipe(
             // tslint:disable-next-line:no-shadowed-variable
-            tap((returnedUser: User) => {
+            tap(({user}) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(returnedUser));
-                this.userSubject.next(returnedUser);
-                this.log(`registered user w/ id=${returnedUser._id}`);
+                localStorage.setItem('user', JSON.stringify(user));
+                this.userSubject.next(user);
+                this.log(`registered user w/ id=${user._id}`);
             }),
-            catchError(this.handleError<User>('Registration'))
+            catchError(this.handleError<{ user: User }>('Registration'))
         );
     }
 
     /** POST : log in a user using his email and his password */
-    login(email: string, password: string): Observable<User> {
-        return this.http.post<User>(`${environment.apiUrl}/user/login`, {email, password}, this.httpOptions).pipe(
-            tap((user: User) => {
+    login(email: string, password: string): Observable<{ user: User }> {
+        return this.http.post<{ user: User }>(`${environment.apiUrl}/user/login`, {email, password}, this.httpOptions).pipe(
+            tap(({user}) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
                 this.log(`logged with user w/ id=${user._id}`);
             }),
-            catchError(this.handleError<User>('Login'))
+            catchError(this.handleError<{ user: User }>('Login'))
         );
     }
 
     /** PUT : edit the preferences for the current user */
-    editProfile(user: User): Observable<User> {
-        return this.http.put<User>(`${environment.apiUrl}/user`, user, {
-            headers: new HttpHeaders({'Content-Type': 'application/json'}).set('Authorization', 'BEARER <' + user.token + '>'),
+    editProfile(user: User): Observable<{ user: User }> {
+        return this.http.put<{ user: User }>(`${environment.apiUrl}/user`, user, {
+            headers: new HttpHeaders({'Content-Type': 'application/json'}).set('Authorization', `Bearer ${user.token}`),
         }).pipe(
-            tap((returnedUser: User) => {
+            // tslint:disable-next-line:no-shadowed-variable
+            tap(({user}) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(returnedUser));
-                this.userSubject.next(returnedUser);
-                this.log(`updated user w/ id=${returnedUser._id}`);
+                localStorage.setItem('user', JSON.stringify(user));
+                this.userSubject.next(user);
+                this.log(`updated user w/ id=${user._id}`);
             }),
-            catchError(this.handleError<User>('EditPreferences'))
+            catchError(this.handleError<{ user: User }>('ProfileEditing'))
         );
     }
 

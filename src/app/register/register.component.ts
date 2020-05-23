@@ -37,8 +37,8 @@ export class RegisterComponent implements OnInit {
             firstName: ['', [Validators.required, Validators.minLength(2)]],
             lastName: ['', [Validators.required, Validators.minLength(2)]],
             vehicle: [null],
-            seats: [null, [Validators.min(1), Validators.max(10)]],
-            luggageSize: [null],
+            seats: [2, [Validators.min(1), Validators.max(10)]],
+            luggageSize: ['medium'],
             talk: ['', Validators.required],
             smoke: [false],
         });

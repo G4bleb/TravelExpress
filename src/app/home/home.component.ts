@@ -8,13 +8,13 @@ import {UserService} from '@app/services';
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private userService: UserService) {
+    constructor() {
     }
 
     ngOnInit(): void {
     }
 
     getUser() {
-        return this.userService.getSessionUser();
+        return localStorage.getItem('user');
     }
 }
