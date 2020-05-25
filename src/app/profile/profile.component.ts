@@ -16,6 +16,8 @@ export class ProfileComponent implements OnInit {
     submitted = false;
     returnUrl: string;
 
+    currentUser: User;
+
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -25,29 +27,29 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const currentUser = this.userService.getSessionUser();
+        this.currentUser = this.userService.getSessionUser();
         this.form = this.formBuilder.group({
-            email: ['', [Validators.email, Validators.required]],
-            tel: ['', [Validators.required, Validators.pattern('[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}')]],
-            password: ['', [Validators.required, Validators.minLength(6)]],
-            firstName: ['', [Validators.required, Validators.minLength(2)]],
-            lastName: ['', [Validators.required, Validators.minLength(2)]],
+            email: ['', [ Validators.email ]],
+            tel: ['', [ Validators.pattern('[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}')]],
+            password: ['', [Validators.minLength(6)]],
+            firstName: ['', [Validators.minLength(2)]],
+            lastName: ['', [Validators.minLength(2)]],
             vehicle: [null],
             seats: [null, [Validators.min(1), Validators.max(10)]],
             luggageSize: [null],
-            talk: ['', Validators.required],
+            talk: [''],
             smoke: [false],
         });
 
-        this.form.controls.email.setValue(currentUser.email);
-        this.form.controls.tel.setValue(currentUser.tel);
-        this.form.controls.firstName.setValue(currentUser.firstName);
-        this.form.controls.lastName.setValue(currentUser.lastName);
-        this.form.controls.vehicle.setValue(currentUser.vehicle);
-        this.form.controls.seats.setValue(currentUser.seats);
-        this.form.controls.luggageSize.setValue(currentUser.luggageSize);
-        this.form.controls.talk.setValue(currentUser.talk);
-        this.form.controls.smoke.setValue(currentUser.smoke);
+        this.form.controls.email.setValue(this.currentUser.email);
+        this.form.controls.tel.setValue(this.currentUser.tel);
+        this.form.controls.firstName.setValue(this.currentUser.firstName);
+        this.form.controls.lastName.setValue(this.currentUser.lastName);
+        this.form.controls.vehicle.setValue(this.currentUser.vehicle);
+        this.form.controls.seats.setValue(this.currentUser.seats);
+        this.form.controls.luggageSize.setValue(this.currentUser.luggageSize);
+        this.form.controls.talk.setValue(this.currentUser.talk);
+        this.form.controls.smoke.setValue(this.currentUser.smoke);
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
@@ -68,18 +70,35 @@ export class ProfileComponent implements OnInit {
             return;
         }
 
-        const user: User = this.form.value;
-        // const currentUser: User = JSON.parse(localStorage.getItem('user'));
+        // We do not have the current user's password
+        // if (this.currentUser.password !== this.form.controls.password.value) {
+        //     this.form.controls.password.setErrors({incorrect: true});
+        //     return;
+        // } else {
+        //     this.form.controls.password.setErrors(null);
+        // }
 
-        /*if (currentUser.password !== user.password) {
-            this.form.controls.password.setErrors({incorrect: true});
-            return;
-        } else {
-            this.form.controls.password.setErrors(null);
-        }*/
+        let user: User;
+        {
+            let modified = false;
+            
+            Object.keys(this.form.controls).forEach((name) => {
+                let currentControl = this.form.controls[name];
+
+                if (currentControl.dirty) {
+                    modified = true;
+                    user[name] = currentControl.value;
+                }
+            });
+
+            if(modified){
+                return
+            }
+        }
+        
 
         this.loading = true;
-        this.userService.editProfile(user).pipe(first()).subscribe(
+        this.userService.editProfile(user, this.currentUser.token).pipe(first()).subscribe(
             data => {
                 this.loading = false;
                 if (data !== undefined) {// update succeeded

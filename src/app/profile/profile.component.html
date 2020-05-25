@@ -5,7 +5,7 @@
             <h5 class="card-title">Personal informations</h5>
             <div class="row mb-3">
                 <div class="form-group col-12">
-                    <label for="email">E-Mail address *</label>
+                    <label for="email">E-Mail address</label>
                     <input type="email" formControlName="email" class="form-control"
                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
                     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="tel">Phone number *</label>
+                    <label for="tel">Phone number</label>
                     <input type="tel" pattern="[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}"
                            formControlName="tel" class="form-control"
                            [ngClass]="{ 'is-invalid': submitted && f.tel.errors }"/>
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="password">Password *</label>
+                    <label for="password">New Password</label>
                     <input type="password" autocomplete="current-password" formControlName="password"
                            class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
                     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="firstName">First Name *</label>
+                    <label for="firstName">First Name</label>
                     <input type="text" formControlName="firstName" class="form-control"
                            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"/>
                     <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="lastName">Last Name *</label>
+                    <label for="lastName">Last Name</label>
                     <input type="text" formControlName="lastName" class="form-control"
                            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"/>
                     <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
@@ -88,7 +88,7 @@
             <h5 class="card-title">Other</h5>
             <div class="row">
                 <div class="form-group col-12">
-                    <label for="talk">Do you like to talk with others ? *</label>
+                    <label for="talk">Do you like to talk with others ?</label>
                     <select formControlName="talk" class="form-control"
                             [ngClass]="{ 'is-invalid': submitted && f.talk.errors }">
                         <option value="yes">Yes</option>
@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="smoke">Do you allow others to smoke when you drive ? *</label>
+                    <label for="smoke">Do you allow others to smoke when you drive ?</label>
                     <input type="checkbox" formControlName="smoke" class="form-control switch" style="width: 40px"
                            [ngClass]="{ 'is-invalid': submitted && f.smoke.errors }"/>
                 </div>
