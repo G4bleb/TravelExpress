@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Trip, User} from '@app/entities';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AlertService} from '@app/services/alert.service';
 import {environment} from '@environments/environment';
 import {catchError, tap} from 'rxjs/operators';
 import {UserService} from '@app/services/user.service';
+import {Search} from '@app/entities/search';
 
 @Injectable({
     providedIn: 'root'
@@ -23,21 +24,33 @@ export class TripService {
     }
 
     /** POST create a trip */
-    createTrip(trip: Trip) {
+    createTrip(tripToAdd: Trip) {
         const user: User = this.userService.getSessionUser();
-        return this.http.post<Trip>(`${environment.apiUrl}/trip`, trip, {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}`}),
+        return this.http.post<Trip>(`${environment.apiUrl}/trip`, tripToAdd, {
+            headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}`}),
         }).pipe(
-            // tslint:disable-next-line:no-shadowed-variable
             tap((trip: Trip) => {
-                this.log(`created trip w/ id=${trip._id}`);
+                // this.log(`created trip w/ id=${trip._id}`);
             }),
             catchError(this.handleError<User>('Trip creation'))
         );
     }
 
-    findTrips() {
-
+    findTrips(search: Search): Observable<Array<Trip>> {
+        let params = new HttpParams();
+        Object.keys(search).forEach(key => {
+            if (search[key] !== undefined) {
+                params = params.set(key, search[key]);
+            }
+        });
+        return this.http.get<Array<Trip>>(`${environment.apiUrl}/trip?`, {
+            headers: new HttpHeaders({'Content-Type': 'application/json'}), params
+        }).pipe(
+            tap((trips) => {
+                // this.log('Got some trips : ' + trips.length);
+            }),
+            catchError(this.handleError<Array<Trip>>('Trip research'))
+        );
     }
 
     /**

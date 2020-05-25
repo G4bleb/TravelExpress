@@ -25,13 +25,13 @@ export class UserService {
     }
 
     /** POST: add a new user to the server */
-    register(userToadd: User): Observable<{ user: User }> {
-        return this.http.post<{ user: User }>(`${environment.apiUrl}/user`, userToadd, this.httpOptions).pipe(
+    register(userToAdd: User): Observable<{ user: User }> {
+        return this.http.post<{ user: User }>(`${environment.apiUrl}/user`, userToAdd, this.httpOptions).pipe(
             tap(({user}) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
-                this.log(`registered user w/ id=${user._id}`);
+                // this.log(`registered user w/ id=${user._id}`);
             }),
             catchError(this.handleError<{ user: User }>('Registration'))
         );
@@ -44,7 +44,7 @@ export class UserService {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
-                this.log(`logged with user w/ id=${user._id}`);
+                // this.log(`logged with user w/ id=${user._id}`);
             }),
             catchError(this.handleError<{ user: User }>('Login'))
         );
@@ -59,7 +59,7 @@ export class UserService {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
-                this.log(`updated user w/ id=${user._id}`);
+                // this.log(`updated user w/ id=${user._id}`);
             }),
             catchError(this.handleError<{ user: User }>('Profile Editing'))
         );

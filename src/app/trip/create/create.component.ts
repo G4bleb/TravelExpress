@@ -32,8 +32,8 @@ export class CreateTripComponent implements OnInit {
             toLocation: ['', Validators.required],
             fromDate: ['', Validators.required],
             toDate: ['', Validators.required],
-            repeat: ['', Validators.required],
-            endRepeat: ['', Validators.required],
+            repeat: ['no', Validators.required],
+            endRepeat: [null],
         });
 
         // get return url from route parameters or default to '/'
@@ -56,6 +56,31 @@ export class CreateTripComponent implements OnInit {
         }
 
         const trip: Trip = this.form.value;
+        trip.fromDate = new Date(trip.fromDate);
+        trip.toDate = new Date(trip.toDate);
+        if (trip.repeat === 'no') { // S'il n'y a pas de répétition du voyage alors on met la date de fin de répétition à null
+            trip.endRepeat = null;
+        } else {
+            // Sinon comme il y a répétition on vérifie que la date de fin est bien après aujourd'hui
+            trip.endRepeat = new Date(trip.endRepeat);
+            if (trip.endRepeat.getTime() < Date.now()) {
+                this.f.endRepeat.setErrors({'today': true});
+            }
+        }
+        if (trip.fromDate.getTime() > trip.toDate.getTime()) { // Si la date de départ est après la date d'arrivée
+            this.f.toDate.setErrors({'incorrect': true});
+        }
+        if (trip.fromDate.getTime() < Date.now()) { // Si la date de départ est avant aujourd'hui
+            this.f.fromDate.setErrors({'today': true});
+        }
+        if (trip.toDate.getTime() < Date.now()) { // Si la date d'arrivée est avant aujourd'hui
+            this.f.toDate.setErrors({'today': true});
+        }
+
+        // stop here if form is invalid
+        if (this.form.invalid) {
+            return;
+        }
 
         this.loading = true;
         this.tripService.createTrip(trip).pipe(first()).subscribe(
@@ -71,5 +96,17 @@ export class CreateTripComponent implements OnInit {
                 this.loading = false;
             }
         );
+    }
+
+    showFrequencyEnding() {
+        if (this.f.repeat.value !== 'no') {
+            if (document.getElementById('div-endrepeat').classList.contains('d-none')) {
+                document.getElementById('div-endrepeat').classList.remove('d-none');
+            }
+        } else {
+            if (!document.getElementById('div-endrepeat').classList.contains('d-none')) {
+                document.getElementById('div-endrepeat').classList.add('d-none');
+            }
+        }
     }
 }

@@ -41,15 +41,15 @@ export class ProfileComponent implements OnInit {
             smoke: [false],
         });
 
-        this.form.controls.email.setValue(this.currentUser.email);
-        this.form.controls.tel.setValue(this.currentUser.tel);
-        this.form.controls.firstName.setValue(this.currentUser.firstName);
-        this.form.controls.lastName.setValue(this.currentUser.lastName);
-        this.form.controls.vehicle.setValue(this.currentUser.vehicle);
-        this.form.controls.seats.setValue(this.currentUser.seats);
-        this.form.controls.luggageSize.setValue(this.currentUser.luggageSize);
-        this.form.controls.talk.setValue(this.currentUser.talk);
-        this.form.controls.smoke.setValue(this.currentUser.smoke);
+        this.f.email.setValue(this.currentUser.email);
+        this.f.tel.setValue(this.currentUser.tel);
+        this.f.firstName.setValue(this.currentUser.firstName);
+        this.f.lastName.setValue(this.currentUser.lastName);
+        this.f.vehicle.setValue(this.currentUser.vehicle);
+        this.f.seats.setValue(this.currentUser.seats);
+        this.f.luggageSize.setValue(this.currentUser.luggageSize);
+        this.f.talk.setValue(this.currentUser.talk);
+        this.f.smoke.setValue(this.currentUser.smoke);
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';

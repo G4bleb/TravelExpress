@@ -14,6 +14,7 @@ import {HomeComponent} from './home/home.component';
 import {AlertComponent} from './alert/alert.component';
 import {SearchTripComponent} from './trip/search/search.component';
 import {CreateTripComponent} from './trip/create/create.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import {CreateTripComponent} from './trip/create/create.component';
         AppRoutingModule,
         ReactiveFormsModule,
         HttpClientModule,
+        FontAwesomeModule
     ],
     providers: [],
     bootstrap: [AppComponent]
