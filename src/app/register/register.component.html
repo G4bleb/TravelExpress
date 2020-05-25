@@ -10,6 +10,7 @@
                            [ngClass]="{ 'is-invalid': submitted && f.email.errors }"/>
                     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                         <div *ngIf="f.email.errors.required">E-Mail address is required</div>
+                        <div *ngIf="f.email.errors.email">E-Mail address doesn't respect email pattern</div>
                     </div>
                 </div>
                 <div class="form-group col-12">

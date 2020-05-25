@@ -26,13 +26,13 @@ export class TripService {
     createTrip(trip: Trip) {
         const user: User = this.userService.getSessionUser();
         return this.http.post<Trip>(`${environment.apiUrl}/trip`, trip, {
-            headers: new HttpHeaders({'Content-Type': 'application/json'}).set('Authorization', 'BEARER <' + user.token + '>'),
+            headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}`}),
         }).pipe(
             // tslint:disable-next-line:no-shadowed-variable
             tap((trip: Trip) => {
                 this.log(`created trip w/ id=${trip._id}`);
             }),
-            catchError(this.handleError<User>('Registration'))
+            catchError(this.handleError<User>('Trip creation'))
         );
     }
 

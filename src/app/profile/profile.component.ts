@@ -29,14 +29,14 @@ export class ProfileComponent implements OnInit {
     ngOnInit(): void {
         this.currentUser = this.userService.getSessionUser();
         this.form = this.formBuilder.group({
-            email: ['', [ Validators.email ]],
-            tel: ['', [ Validators.pattern('[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}')]],
-            password: ['', [Validators.minLength(6)]],
-            firstName: ['', [Validators.minLength(2)]],
-            lastName: ['', [Validators.minLength(2)]],
+            email: ['', [Validators.email]],
+            tel: ['', [Validators.pattern('[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}')]],
+            password: ['', Validators.minLength(6)],
+            firstName: ['', Validators.minLength(2)],
+            lastName: ['', Validators.minLength(2)],
             vehicle: [null],
-            seats: [null, [Validators.min(1), Validators.max(10)]],
-            luggageSize: [null],
+            seats: [2, [Validators.min(1), Validators.max(10)]],
+            luggageSize: ['medium'],
             talk: [''],
             smoke: [false],
         });
@@ -78,24 +78,30 @@ export class ProfileComponent implements OnInit {
         //     this.form.controls.password.setErrors(null);
         // }
 
-        let user: User;
+        const user: User = {} as User;
         {
             let modified = false;
-            
-            Object.keys(this.form.controls).forEach((name) => {
-                let currentControl = this.form.controls[name];
 
-                if (currentControl.dirty) {
-                    modified = true;
-                    user[name] = currentControl.value;
+            Object.keys(this.form.controls).forEach((name) => {
+                const currentControl = this.form.controls[name];
+
+                if (currentControl.dirty && currentControl.value !== this.currentUser[name]) {
+                    console.log(name);
+                    // Si le mot de passe est vide on ne le modifie pas (la validator ne fonctionne pas sur la chaîne vide)
+                    if (name === 'password' && currentControl.value === '') {
+                        // this.form.controls.password.setErrors({minlength: true});
+                    } else {
+                        modified = true;
+                        user[name] = currentControl.value;
+                    }
                 }
             });
 
-            if(modified){
-                return
+            if (!modified) {
+                return;
             }
         }
-        
+
 
         this.loading = true;
         this.userService.editProfile(user, this.currentUser.token).pipe(first()).subscribe(
