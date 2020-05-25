@@ -25,8 +25,8 @@ export class UserService {
     }
 
     /** POST: add a new user to the server */
-    register(user: User): Observable<{ user: User }> {
-        return this.http.post<{ user: User }>(`${environment.apiUrl}/user`, user, this.httpOptions).pipe(
+    register(userToadd: User): Observable<{ user: User }> {
+        return this.http.post<{ user: User }>(`${environment.apiUrl}/user`, userToadd, this.httpOptions).pipe(
             // tslint:disable-next-line:no-shadowed-variable
             tap(({user}) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -42,6 +42,7 @@ export class UserService {
     login(email: string, password: string): Observable<{ user: User }> {
         return this.http.post<{ user: User }>(`${environment.apiUrl}/user/login`, {email, password}, this.httpOptions).pipe(
             tap(({user}) => {
+                console.log(user)
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
@@ -52,18 +53,18 @@ export class UserService {
     }
 
     /** PUT : edit the preferences for the current user */
-    editProfile(user: User): Observable<{ user: User }> {
-        return this.http.put<{ user: User }>(`${environment.apiUrl}/user`, user, {
-            headers: new HttpHeaders({'Content-Type': 'application/json'}).set('Authorization', `Bearer ${user.token}`),
+    editProfile(replacementUser: User, token: string): Observable<{ user: User }> {
+        return this.http.put<{ user: User }>(`${environment.apiUrl}/user`, replacementUser, {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}),
         }).pipe(
             // tslint:disable-next-line:no-shadowed-variable
-            tap(({user}) => {
+            tap(({ user }) => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);
                 this.log(`updated user w/ id=${user._id}`);
             }),
-            catchError(this.handleError<{ user: User }>('ProfileEditing'))
+            catchError(this.handleError<{ user: User }>('Profile Editing'))
         );
     }
 
