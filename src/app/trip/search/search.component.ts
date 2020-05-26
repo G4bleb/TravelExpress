@@ -101,8 +101,8 @@ export class SearchTripComponent implements OnInit {
         let searchParamsNumber = 0;
         newUrl.searchParams.forEach((value, key) => {
             this.search[key] = value;
-            if(key.includes("Date")){
-                this.search[key] = new Date(this.search[key]).toISOString();
+            if(key.includes("Date")){//When it's a date, we have to convert it to be processed by the API
+                this.search[key] = new Date(this.search[key]).toISOString();//form field (string) to Date object to ISOString
             }
             searchParamsNumber++;
         });
