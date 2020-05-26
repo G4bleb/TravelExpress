@@ -3,15 +3,13 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AlertService, TripService} from '@app/services';
 import {Trip, Search} from '@app/entities';
-import {DatePipe} from '@angular/common';
 import {first} from 'rxjs/operators';
 import {faSortDown, faSortUp} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-search',
     templateUrl: './search.component.html',
-    styleUrls: ['./search.component.css'],
-    providers: [DatePipe]
+    styleUrls: ['./search.component.css']
 })
 export class SearchTripComponent implements OnInit {
     form: FormGroup;
@@ -27,8 +25,7 @@ export class SearchTripComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private tripService: TripService,
-        private alertService: AlertService,
-        private datePipe: DatePipe) {
+        private alertService: AlertService) {
     }
 
     ngOnInit(): void {
@@ -46,6 +43,19 @@ export class SearchTripComponent implements OnInit {
         this.f.fromLocation.setValue(this.search.fromLocation);
         this.f.toLocation.setValue(this.search.toLocation);
         this.f.minFromDate.setValue(this.search.minFromDate);
+        
+        if(this.f.minFromDate.value === undefined){
+            this.f.minFromDate.setValue(this.getCurrentDateTimeWithTimezone());
+            console.log(this.f.minFromDate.value);
+            
+            // this.f.minFromDate.setValue(new Date().toISOString().substring(0, 16))
+        }
+        
+    }
+
+    getCurrentDateTimeWithTimezone() : string{
+        var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+        return (new Date(Date.now() - tzoffset)).toISOString().substring(0, 16);
     }
 
     get f() {
@@ -91,6 +101,9 @@ export class SearchTripComponent implements OnInit {
         let searchParamsNumber = 0;
         newUrl.searchParams.forEach((value, key) => {
             this.search[key] = value;
+            if(key.includes("Date")){
+                this.search[key] = new Date(this.search[key]).toISOString();
+            }
             searchParamsNumber++;
         });
 
