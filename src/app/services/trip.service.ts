@@ -37,14 +37,8 @@ export class TripService {
     }
 
     findTrips(search: Search): Observable<Array<Trip>> {
-        let params = new HttpParams();
-        Object.keys(search).forEach(key => {
-            if (search[key] !== undefined) {
-                params = params.set(key, search[key]);
-            }
-        });
         return this.http.get<Array<Trip>>(`${environment.apiUrl}/trip?`, {
-            headers: new HttpHeaders({'Content-Type': 'application/json'}), params
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' }), params: <any>search
         }).pipe(
             tap((trips) => {
                 // this.log('Got some trips : ' + trips.length);
