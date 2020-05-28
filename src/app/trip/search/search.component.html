@@ -27,14 +27,6 @@
                         <div *ngIf="f.minFromDate.errors.required">Departure date is required</div>
                     </div>
                 </div>
-                <!--<div class="form-group col-md-6 col-12">
-                    <label for="toDate">Arriving date</label>
-                    <input type="date" formControlName="toDate" class="form-control"
-                           [ngClass]="{ 'is-invalid': submitted && f.toDate.errors }"/>
-                    <div *ngIf="submitted && f.toDate.errors" class="invalid-feedback">
-                        <div *ngIf="f.toDate.errors.required">Arriving date is required</div>
-                    </div>
-                </div>-->
                 <div class="form-group col-12">
                     <button [disabled]="loading" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
@@ -48,7 +40,7 @@
 </div>
 
 <div class="row mt-5 mb-5">
-    <div class="col-12 col-md-3">
+    <div class="col-12 col-lg-4">
         <div class="card">
             <h4 class="card-header">
                 Filters
@@ -56,10 +48,69 @@
             </h4>
             <div id="div-filters" class="card-body">
                 <!-- TODO Ici les filtres avec les actions -->
+                <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div class="form-group col-12 col-md-6 col-lg-12">
+                            <label for="minToDate">Arriving date</label>
+                            <input type="date" formControlName="minToDate" class="form-control"
+                                   [ngClass]="{ 'is-invalid': submitted && ff.minToDate.errors }"/>
+                            <div *ngIf="submitted && ff.minToDate.errors" class="invalid-feedback">
+                                <div *ngIf="ff.minToDate.errors.required">Arriving date is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-6 col-lg-12">
+                            <label for="seats">Seats number</label>
+                            <input type="number" formControlName="minSeats" class="form-control" min="1" max="10"
+                                   [ngClass]="{ 'is-invalid': submitted && ff.minSeats.errors }"/>
+                            <div *ngIf="submitted && ff.minSeats.errors" class="invalid-feedback">
+                                <div *ngIf="ff.minSeats.errors.required">Number of seats is required</div>
+                                <div *ngIf="ff.minSeats.errors.minlength">Number of seats must be at least 1</div>
+                                <div *ngIf="ff.minSeats.errors.maxlength">Number of seats must be at most 10</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-6 col-lg-12">
+                            <label for="luggageSize">Luggage's size</label>
+                            <select formControlName="minLuggage" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && ff.minLuggage.errors }">
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="large">Large</option>
+                            </select>
+                            <div *ngIf="submitted && ff.minLuggage.errors" class="invalid-feedback">
+                                <div *ngIf="ff.minLuggage.errors.required">Field required</div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12 col-md-6 col-lg-12">
+                            <label for="smoke">Smoking allowed</label>
+                            <input type="checkbox" formControlName="smoke" class="form-control switch"
+                                   style="width: 40px"
+                                   [ngClass]="{ 'is-invalid': submitted && ff.smoke.errors }"/>
+                        </div>
+                        <div class="form-group col-12 col-md-6 col-lg-12">
+                            <label for="minTalk">Talktivity range</label>
+                            <input type="range" formControlName="minTalk" class="form-control custom-range border-0"
+                                   [ngClass]="{ 'is-invalid': submitted && ff.minTalk.errors }" min="0" max="{{ff.maxTalk.value}}" step="1"/>
+                            <small class="text-muted" *ngIf="ff.minTalk.value === 0">Minimum value : No</small>
+                            <small class="text-muted" *ngIf="ff.minTalk.value === 1">Minimum value : A little</small>
+                            <small class="text-muted" *ngIf="ff.minTalk.value === 2">Minimum value : Yes</small>
+                            <input type="range" formControlName="maxTalk" class="form-control custom-range border-0"
+                                   [ngClass]="{ 'is-invalid': submitted && ff.maxTalk.errors }" min="{{ff.minTalk.value}}" max="2" step="1"/>
+                            <small class="text-muted" *ngIf="ff.maxTalk.value === 0">Maximum value : No</small>
+                            <small class="text-muted" *ngIf="ff.maxTalk.value === 1">Maximum value : A little</small>
+                            <small class="text-muted" *ngIf="ff.maxTalk.value === 2">Maximum value : Yes</small>
+                        </div>
+                        <div class="form-group col-12">
+                            <button [disabled]="loading" class="btn btn-primary">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-9 mt-5 mt-md-0">
+    <div class="col-12 col-lg-8 mt-5 mt-lg-0">
         <div class="card">
             <h4 class="card-header">Results</h4>
             <div class="card-body">
@@ -70,8 +121,8 @@
                         <div class="row border rounded p-2" [ngClass]="{'mt-4': i !== 0}">
                             <div class="col-12">
                                 <div class="float-left">
-                                    {{trip.fromLocation}} the {{trip.fromDate}}<br>
-                                    {{trip.toLocation}} the {{trip.toDate}}<br>
+                                    {{trip.fromLocation}} <strong>on</strong> {{trip.fromDate.toUTCString()}}<br>
+                                    {{trip.toLocation}} <strong>on</strong> {{trip.toDate.toUTCString()}}<br>
                                     {{trip.user.firstName + ' ' + trip.user.lastName}}<br>
                                 </div>
                                 <span class="float-right">5$ CAD</span>

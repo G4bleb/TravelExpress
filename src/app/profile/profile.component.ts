@@ -51,6 +51,11 @@ export class ProfileComponent implements OnInit {
         this.f.talk.setValue(this.currentUser.talk);
         this.f.smoke.setValue(this.currentUser.smoke);
 
+        if (this.f.vehicle.value !== '') {
+            document.getElementById('div-seats').classList.remove('d-none');
+            document.getElementById('div-luggages').classList.remove('d-none');
+        }
+
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
     }
