@@ -6,6 +6,7 @@ import {HomeComponent} from './home/home.component';
 import {ProfileComponent} from '@app/profile/profile.component';
 import {CreateTripComponent} from '@app/trip/create/create.component';
 import {SearchTripComponent} from '@app/trip/search/search.component';
+import {BookTripComponent} from '@app/trip/book/book.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'profile', component: ProfileComponent},
     {path: 'trip/create', component: CreateTripComponent},
-    {path: 'trip/search', component: SearchTripComponent}
+    {path: 'trip/search', component: SearchTripComponent},
+    {path: 'trip/book', component: BookTripComponent}
     // { path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

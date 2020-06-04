@@ -89,12 +89,14 @@
                         <div class="form-group col-12 col-md-6 col-lg-12">
                             <label for="minTalk">Talktivity range</label>
                             <input type="range" formControlName="minTalk" class="form-control custom-range border-0"
-                                   [ngClass]="{ 'is-invalid': submitted && ff.minTalk.errors }" min="0" max="{{ff.maxTalk.value}}" step="1"/>
+                                   [ngClass]="{ 'is-invalid': submitted && ff.minTalk.errors }" min="0"
+                                   max="{{ff.maxTalk.value}}" step="1"/>
                             <small class="text-muted" *ngIf="ff.minTalk.value === 0">Minimum value : No</small>
                             <small class="text-muted" *ngIf="ff.minTalk.value === 1">Minimum value : A little</small>
                             <small class="text-muted" *ngIf="ff.minTalk.value === 2">Minimum value : Yes</small>
                             <input type="range" formControlName="maxTalk" class="form-control custom-range border-0"
-                                   [ngClass]="{ 'is-invalid': submitted && ff.maxTalk.errors }" min="{{ff.minTalk.value}}" max="2" step="1"/>
+                                   [ngClass]="{ 'is-invalid': submitted && ff.maxTalk.errors }"
+                                   min="{{ff.minTalk.value}}" max="2" step="1"/>
                             <small class="text-muted" *ngIf="ff.maxTalk.value === 0">Maximum value : No</small>
                             <small class="text-muted" *ngIf="ff.maxTalk.value === 1">Maximum value : A little</small>
                             <small class="text-muted" *ngIf="ff.maxTalk.value === 2">Maximum value : Yes</small>
@@ -128,7 +130,8 @@
                                 <span class="float-right">5$ CAD</span>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-secondary float-right">Book a place</button>
+                                <button (click)="book(trip._id)" class="btn btn-secondary float-right">Book a place
+                                </button>
                             </div>
                         </div>
                     </div>

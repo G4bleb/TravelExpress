@@ -76,10 +76,6 @@ export class SearchTripComponent implements OnInit {
         return this.trips === undefined ? 0 : this.trips.length;
     }
 
-    getTrips() {
-        return this.trips;
-    }
-
     onSubmit() {
         this.submitted = true;
 
@@ -156,6 +152,8 @@ export class SearchTripComponent implements OnInit {
             this.ff.smoke.setValue(this.search.smoke);
         }
 
+        console.log(this.search);
+
         this.tripService.findTrips(this.search).pipe(first()).subscribe(
             data => {
                 this.loading = false;
@@ -184,5 +182,9 @@ export class SearchTripComponent implements OnInit {
             this.sortDown = faPlus;
             document.getElementById('div-filters').classList.add('d-none');
         }
+    }
+
+    book(tripId: number) {
+        window.location.href = '/trip/book?id=' + tripId;
     }
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {Trip, User} from '@app/entities';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AlertService} from '@app/services/alert.service';
 import {environment} from '@environments/environment';
 import {catchError, tap} from 'rxjs/operators';
@@ -38,12 +38,23 @@ export class TripService {
 
     findTrips(search: Search): Observable<Array<Trip>> {
         return this.http.get<Array<Trip>>(`${environment.apiUrl}/trip?`, {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' }), params: <any>search
+            headers: new HttpHeaders({'Content-Type': 'application/json'}), params: search as any
         }).pipe(
             tap((trips) => {
                 // this.log('Got some trips : ' + trips.length);
             }),
             catchError(this.handleError<Array<Trip>>('Trip research'))
+        );
+    }
+
+    getTrip(id: number): Observable<Trip> {
+        return this.http.get<Trip>(`${environment.apiUrl}/trip?`, {
+            headers: new HttpHeaders({'Content-Type': 'application/json'}), params: id as any
+        }).pipe(
+            tap((trip) => {
+                // this.log(`got trip w/ id=${trip._id}`);
+            }),
+            catchError(this.handleError<Trip>('Trip research'))
         );
     }
 
