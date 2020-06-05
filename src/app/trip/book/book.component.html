@@ -11,6 +11,16 @@
                     </div>
                     <span class="float-right">5$ CAD</span>
                 </div>
+                <div class="form-group col-12 col-md-6 col-lg-12">
+                    <label for="seats">Seats to book</label>
+                    <input type="number" formControlName="seats" class="form-control" min="1" max="10"
+                           [ngClass]="{ 'is-invalid': submitted && f.seats.errors }"/>
+                    <div *ngIf="submitted && f.seats.errors" class="invalid-feedback">
+                        <div *ngIf="f.seats.errors.required">Number of seats is required</div>
+                        <div *ngIf="f.seats.errors.minlength">Number of seats must be at least 1</div>
+                        <div *ngIf="f.seats.errors.maxlength">Number of seats must be at most 10</div>
+                    </div>
+                </div>
                 <div class="form-group col-12">
                     <button [disabled]="loading" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>

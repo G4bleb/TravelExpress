@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {Trip, User} from '@app/entities';
+import {Reservation, Trip, User} from '@app/entities';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AlertService} from '@app/services/alert.service';
 import {environment} from '@environments/environment';
@@ -55,6 +55,19 @@ export class TripService {
                 // this.log(`got trip w/ id=${trip._id}`);
             }),
             catchError(this.handleError<{ trip: Trip }>('Trip research'))
+        );
+    }
+
+    bookReservation(reservation: Reservation) {
+        const user: User = this.userService.getSessionUser();
+        return this.http.post<Reservation>(`${environment.apiUrl}/reservation`, {
+            headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}`}),
+            params: reservation as any
+        }).pipe(
+            tap((newReservation) => {
+                // this.log(`created reservation w/ id=${newReservation._id}`);
+            }),
+            catchError(this.handleError<Reservation>('Trip research'))
         );
     }
 

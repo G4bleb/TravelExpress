@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AlertService, TripService, UserService} from '@app/services';
-import {Trip, User} from '@app/entities';
+import {Reservation, Trip, User} from '@app/entities';
 import {first} from 'rxjs/operators';
 
 @Component({
@@ -27,7 +27,10 @@ export class BookTripComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.form = this.formBuilder.group({});
+        this.form = this.formBuilder.group({
+            seats: [1, [Validators.min(1), Validators.max(10)]],
+            paid: [true]
+        });
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
@@ -77,11 +80,34 @@ export class BookTripComponent implements OnInit {
         this.submitted = true;
         // reset alerts on submit
         this.alertService.clear();
+
+        if (this.form.invalid) {
+            return;
+        }
+
         this.loading = true;
 
-        const result = window.confirm('Are you sure you want to book a place ?');
+        const result = window.confirm('Are you sure you want to book ' + Number(this.f.seats.value) + ' place(s) ? ' +
+            '\nIt\'s gonna cost you : ' + Number(this.f.seats.value * 5) + ' $CAD');
         if (result) {
-
+            const reservation: Reservation = this.form.value;
+            reservation.trip = this.trip;
+            reservation.user = this.userService.getSessionUser();
+            this.tripService.bookReservation(reservation).pipe(first()).subscribe(
+                data => {
+                    this.loading = false;
+                    if (data !== undefined) {// POST succeeded
+                        this.alertService.success('Reservation successfully created', {keepAfterRouteChange: true});
+                        this.router.navigate([this.returnUrl]);
+                    }
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                }
+            );
+        } else {
+            this.loading = false;
         }
     }
 }
