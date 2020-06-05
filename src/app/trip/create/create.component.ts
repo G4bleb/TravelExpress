@@ -26,8 +26,10 @@ export class CreateTripComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        let currentUser = this.userService.getSessionUser();
+
         this.form = this.formBuilder.group({
-            user: [this.userService.getSessionUser()],
+            user: [currentUser],
             fromLocation: ['', Validators.required],
             toLocation: ['', Validators.required],
             fromDate: ['', Validators.required],
@@ -38,6 +40,13 @@ export class CreateTripComponent implements OnInit {
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+
+        if (currentUser.vehicle === ""){
+            this.alertService.error(
+                'You must have a vehicle set in your profile to create a trip', { keepAfterRouteChange: true }); 
+            this.router.navigate(['/profile']);
+            
+        }
     }
 
     get f() {
@@ -88,7 +97,7 @@ export class CreateTripComponent implements OnInit {
                 this.loading = false;
                 if (data !== undefined) {// create succeeded
                     this.alertService.success('Trip successfully created', {keepAfterRouteChange: true});
-                    window.location.href = this.returnUrl;
+                    this.router.navigate([this.returnUrl]);
                 }
             },
             error => {
