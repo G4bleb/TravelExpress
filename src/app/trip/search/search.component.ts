@@ -86,7 +86,6 @@ export class SearchTripComponent implements OnInit {
             return;
         }
 
-        this.loading = true;
         let search: Search;
         if (this.filtersToggleIcon === faMinus) {// If filters are on (div open)
             search = this.filterForm.value;
@@ -119,6 +118,7 @@ export class SearchTripComponent implements OnInit {
     }
 
     searchTrips(params: ParamMap) {
+        this.loading = true;
         this.search = {} as Search;
         let searchParamsCount = 0;
 
