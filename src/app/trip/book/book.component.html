@@ -4,10 +4,10 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="mb-3 col-12">
-                    <div class="float-left">
-                        {{this.trip.fromLocation}} <strong>on</strong> {{this.trip.fromDate.toUTCString()}}<br>
-                        {{this.trip.toLocation}} <strong>on</strong> {{this.trip.toDate.toUTCString()}}<br>
-                        {{this.trip.user.firstName + ' ' + this.trip.user.lastName}}<br>
+                    <div class="float-left" *ngIf="trip">
+                        {{trip.fromLocation}} <strong>on</strong> {{trip.fromDate.toUTCString()}}<br>
+                        {{trip.toLocation}} <strong>on</strong> {{trip.toDate.toUTCString()}}<br>
+                        {{tripUserFirstName + ' ' + tripUserLastName}}<br>
                     </div>
                     <span class="float-right">5$ CAD</span>
                 </div>

@@ -87,8 +87,8 @@ export class BookTripComponent implements OnInit {
 
         this.loading = true;
 
-        const result = window.confirm('Are you sure you want to book ' + Number(this.f.seats.value) + ' place(s) ? ' +
-            '\nIt\'s gonna cost you : ' + Number(this.f.seats.value * 5) + ' $CAD');
+        const result = window.confirm('Are you sure you want to book ' + Number(this.f.seats.value) + ' seat(s) ? ' +
+            '\nIt will cost you : ' + Number(this.f.seats.value * 5) + ' $CA');
         if (result) {
             const reservation: Reservation = this.form.value;
             reservation.trip = this.trip;
@@ -109,5 +109,19 @@ export class BookTripComponent implements OnInit {
         } else {
             this.loading = false;
         }
+    }
+
+    get tripUserFirstName(){
+        if(typeof this.trip.user === 'string'){
+            return "";
+        }
+        return this.trip.user.firstName;
+    }
+
+    get tripUserLastName() {
+        if (typeof this.trip.user === 'string') {
+            return "";
+        }
+        return this.trip.user.lastName;
     }
 }
