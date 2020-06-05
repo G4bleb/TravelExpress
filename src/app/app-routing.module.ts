@@ -16,7 +16,7 @@ const routes: Routes = [
     {path: 'profile', component: ProfileComponent},
     {path: 'trip/create', component: CreateTripComponent},
     {path: 'trip/search', component: SearchTripComponent},
-    {path: 'trip/book', component: BookTripComponent}
+    {path: 'trip/book/:id', component: BookTripComponent}
     // { path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 
