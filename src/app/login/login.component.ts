@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
                 this.loading = false;
                 if (data !== undefined) { // login succeeded
                     this.alertService.success('Login successful', {keepAfterRouteChange: true});
-                    window.location.href = this.returnUrl;
+                    this.router.navigate([this.returnUrl]);
                 }
             },
             error => {

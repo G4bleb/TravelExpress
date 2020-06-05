@@ -18,6 +18,6 @@ export class AppComponent {
 
     logout() {
         localStorage.removeItem('user');
-        window.location.href = '/';
+        this.router.navigate(['/']);
     }
 }

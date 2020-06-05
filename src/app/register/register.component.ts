@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit {
                 this.loading = false;
                 if (data !== undefined) { // Register succeeded
                     this.alertService.success('Registration successful', {keepAfterRouteChange: true});
-                    window.location.href = '/';
+                    this.router.navigate(['/']);
                 }
             },
             error => {

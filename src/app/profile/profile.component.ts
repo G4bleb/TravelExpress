@@ -114,7 +114,7 @@ export class ProfileComponent implements OnInit {
                 this.loading = false;
                 if (data !== undefined) {// update succeeded
                     this.alertService.success('Update successful', {keepAfterRouteChange: true});
-                    window.location.href = this.returnUrl;
+                    this.router.navigate([this.returnUrl]);
                 }
             },
             error => {
