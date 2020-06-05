@@ -1,8 +1,8 @@
-import {User} from './user';
+import { User } from './user';
 
 export interface Trip {
-    _id: number;
-    user: User;
+    _id: string;
+    user: User | string;
     fromLocation: string;
     fromDate: Date;
     toLocation: string;
