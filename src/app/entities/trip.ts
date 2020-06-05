@@ -2,7 +2,7 @@ import { User } from './user';
 
 export interface Trip {
     _id: string;
-    user: User;
+    user: User | string;
     fromLocation: string;
     fromDate: Date;
     toLocation: string;

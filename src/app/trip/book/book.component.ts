@@ -61,7 +61,7 @@ export class BookTripComponent implements OnInit {
 
                     console.log(this.trip.user);
 
-                    this.userService.get(String(this.trip.user)).subscribe(
+                    this.userService.get(this.trip.user as string).subscribe(
                         user => {
                             // console.log(data);
                             if (user !== undefined) {// GET succeeded
