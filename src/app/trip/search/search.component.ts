@@ -1,12 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router, ParamMap} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {AlertService, TripService, UserService} from '@app/services';
-import {Search, Trip} from '@app/entities';
+import {Search, Trip, User} from '@app/entities';
 import {first} from 'rxjs/operators';
 import {faMinus, faPlus} from '@fortawesome/free-solid-svg-icons';
-
-import {User} from '@app/entities'
 
 @Component({
     selector: 'app-search',
@@ -54,7 +52,7 @@ export class SearchTripComponent implements OnInit {
 
             // this.f.minFromDate.setValue(new Date().toISOString().substring(0, 16))
         }
-        
+
         this.route.queryParamMap.subscribe(params => {
             this.searchTrips(params);
         });
@@ -89,18 +87,18 @@ export class SearchTripComponent implements OnInit {
         }
 
         this.loading = true;
-        let search:Search;
-        if (this.filtersToggleIcon === faMinus) {//If filters are on (div open)
+        let search: Search;
+        if (this.filtersToggleIcon === faMinus) {// If filters are on (div open)
             search = this.filterForm.value;
-        }else{
+        } else {
             search = {} as Search;
         }
         search.fromLocation = this.f.fromLocation.value;
         search.toLocation = this.f.toLocation.value;
         search.minFromDate = this.f.minFromDate.value;
 
-        let newparams = {};
-        
+        const newparams = {};
+
         // newUrl.searchParams.set('search', JSON.stringify(search));
         Object.keys(search).forEach(key => {
             if (search[key] !== undefined && search[key] !== null && search[key] !== 'null' && search[key] !== '') {
@@ -113,14 +111,14 @@ export class SearchTripComponent implements OnInit {
                         search[key] = 'yes';
                     }
                 }
-                newparams[key] = search[key]
+                newparams[key] = search[key];
             }
         });
-        
-        this.router.navigate([], {queryParams:newparams});
+
+        this.router.navigate([], {queryParams: newparams});
     }
 
-    searchTrips(params : ParamMap) {
+    searchTrips(params: ParamMap) {
         this.search = {} as Search;
         let searchParamsCount = 0;
 
@@ -140,7 +138,7 @@ export class SearchTripComponent implements OnInit {
             }
             searchParamsCount++;
         });
-        
+
         if (searchParamsCount === 0) {
             return;
         }
@@ -148,8 +146,7 @@ export class SearchTripComponent implements OnInit {
         this.f.fromLocation.setValue(this.search.fromLocation);
         this.f.toLocation.setValue(this.search.toLocation);
         this.f.minFromDate.setValue(this.getDateWithTimezone(this.search.minFromDate));
-        if (this.filtersToggleIcon === faMinus){//If filters are on (div open)
-            
+        if (this.filtersToggleIcon === faMinus) { // If filters are on (div open)
             if (this.search.minToDate !== undefined) {
                 this.ff.minToDate.setValue(this.getDateWithTimezone(this.search.minToDate));
             }
@@ -160,9 +157,6 @@ export class SearchTripComponent implements OnInit {
                 this.ff.smoke.setValue(this.search.smoke);
             }
         }
-        
-
-        console.log(this.search);
 
         this.tripService.findTrips(this.search).pipe(first()).subscribe(
             data => {
@@ -172,13 +166,12 @@ export class SearchTripComponent implements OnInit {
                     this.trips.forEach(trip => {
                         trip.toDate = new Date(trip.toDate);
                         trip.fromDate = new Date(trip.fromDate);
-                        //We got user id, we need its infos
+                        // We got user id, we need its infos
                         this.userService.get(trip.user as string).subscribe(
                             user => {
                                 // console.log(data);
                                 if (user !== undefined) {// GET succeeded
                                     trip.user = user as User;
-                                    
                                 }
                             }
                         );

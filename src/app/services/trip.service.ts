@@ -47,14 +47,14 @@ export class TripService {
         );
     }
 
-    getTrip(id: string): Observable<Trip> {
-        return this.http.get<Trip>(`${environment.apiUrl}/trip?`, {
+    getTrip(id: string): Observable<{ trip: Trip }> {
+        return this.http.get<{ trip: Trip }>(`${environment.apiUrl}/trip?`, {
             headers: new HttpHeaders({'Content-Type': 'application/json'}), params: id as any
         }).pipe(
             tap((trip) => {
                 // this.log(`got trip w/ id=${trip._id}`);
             }),
-            catchError(this.handleError<Trip>('Trip research'))
+            catchError(this.handleError<{ trip: Trip }>('Trip research'))
         );
     }
 
