@@ -44,9 +44,9 @@
         <div class="card">
             <h4 class="card-header">
                 Filters
-                <fa-icon id="arrow-icon" class="float-right" [icon]="sortDown" (click)="hideDiv()"></fa-icon>
+                <fa-icon id="arrow-icon" class="float-right" [icon]="filtersToggleIcon" (click)="toggleFiltersDiv()"></fa-icon>
             </h4>
-            <div id="div-filters" class="card-body">
+            <div id="div-filters" class="card-body d-none">
                 <!-- TODO Ici les filtres avec les actions -->
                 <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
                     <div class="row">
@@ -87,7 +87,7 @@
                                    [ngClass]="{ 'is-invalid': submitted && ff.smoke.errors }"/>
                         </div>
                         <div class="form-group col-12 col-md-6 col-lg-12">
-                            <label for="minTalk">Talktivity range</label>
+                            <label for="minTalk">Talkativity range</label>
                             <input type="range" formControlName="minTalk" class="form-control custom-range border-0"
                                    [ngClass]="{ 'is-invalid': submitted && ff.minTalk.errors }" min="0"
                                    max="{{ff.maxTalk.value}}" step="1"/>
@@ -130,7 +130,7 @@
                                 <span class="float-right">5$ CAD</span>
                             </div>
                             <div class="col-12">
-                                <button (click)="book(trip._id)" class="btn btn-secondary float-right">Book a place
+                                <button (click)="book(trip._id)" class="btn btn-secondary float-right">Book a seat
                                 </button>
                             </div>
                         </div>
