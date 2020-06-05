@@ -27,18 +27,28 @@ export class BookTripComponent implements OnInit {
 
     ngOnInit(): void {
         this.form = this.formBuilder.group({
-
         });
+
+        // get return url from route parameters or default to '/'
+        this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+        
+        const id: string = this.route.snapshot.paramMap.get('id');
+        console.log(`Getting trip w/ id : ${id}`);
+
+        if(id === undefined){
+            this.alertService.error("Failed to parse trip id from route");
+            this.router.navigate([this.returnUrl]);
+        }else{
+            // this.getTripDetail(id) //TODO
+        }
     }
 
-    getTripDetail() {
-        const id = Number(new URL(window.location.href).searchParams.get('id'));
-
-
+    getTripDetail(id:string) {
+        
         this.tripService.getTrip(id).pipe(first()).subscribe(
             data => {
                 this.loading = false;
-                if (data !== undefined) {// create succeeded
+                if (data !== undefined) {// GET succeeded
 
                     // this.alertService.info(`Found ${this.trips.length} trip(s)`);
                 }
