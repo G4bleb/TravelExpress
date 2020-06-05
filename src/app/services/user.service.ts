@@ -66,7 +66,7 @@ export class UserService {
     }
 
     /** GET : get a user from its id */
-    get(id:string): Observable<User> {
+    get(id: string): Observable<User> {
         return this.http.get<User>(`${environment.apiUrl}/user/${id}`).pipe(
             tap((user) => {
             }),

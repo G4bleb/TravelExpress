@@ -167,7 +167,7 @@ export class SearchTripComponent implements OnInit {
                         trip.toDate = new Date(trip.toDate);
                         trip.fromDate = new Date(trip.fromDate);
                         // We got user id, we need its infos
-                        this.userService.get(trip.user as string).subscribe(
+                        this.userService.get(String(trip.user)).subscribe(
                             user => {
                                 // console.log(data);
                                 if (user !== undefined) {// GET succeeded
