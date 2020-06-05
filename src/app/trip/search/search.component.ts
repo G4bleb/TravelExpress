@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService, TripService} from '@app/services';
+import {ActivatedRoute, Router, ParamMap} from '@angular/router';
+import {AlertService, TripService, UserService} from '@app/services';
 import {Search, Trip} from '@app/entities';
 import {first} from 'rxjs/operators';
 import {faMinus, faPlus} from '@fortawesome/free-solid-svg-icons';
@@ -16,9 +16,8 @@ export class SearchTripComponent implements OnInit {
     filterForm: FormGroup;
     loading = false;
     submitted = false;
-    returnUrl: string;
     trips: Array<Trip>;
-    sortDown = faMinus;
+    filtersToggleIcon = faPlus;
     search: Search;
 
     constructor(
@@ -26,6 +25,7 @@ export class SearchTripComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private tripService: TripService,
+        private userService: UserService,
         private alertService: AlertService) {
     }
 
@@ -46,22 +46,21 @@ export class SearchTripComponent implements OnInit {
             maxTalk: [2],
         });
 
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
-        this.searchTrips();
-
         if (this.f.minFromDate.value === undefined || this.f.minFromDate.value === '') {
-            this.f.minFromDate.setValue(this.getCurrentDateTimeWithTimezone());
+            this.f.minFromDate.setValue(this.getDateWithTimezone(new Date()));
             // console.log(this.f.minFromDate.value);
 
             // this.f.minFromDate.setValue(new Date().toISOString().substring(0, 16))
         }
-
+        
+        this.route.queryParamMap.subscribe(params => {
+            this.searchTrips(params);
+        });
     }
 
-    getCurrentDateTimeWithTimezone(): string {
-        const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
-        return (new Date(Date.now() - tzoffset)).toISOString().substring(0, 16);
+    getDateWithTimezone(date: Date): string {
+        const tzoffset = date.getTimezoneOffset() * 60000; // offset in milliseconds
+        return (new Date(date.getTime() - tzoffset)).toISOString().substring(0, 16);
     }
 
     get f() {
@@ -88,13 +87,18 @@ export class SearchTripComponent implements OnInit {
         }
 
         this.loading = true;
-        const search: Search = this.filterForm.value;
+        let search:Search;
+        if (this.filtersToggleIcon === faMinus) {//If filters are on (div open)
+            search = this.filterForm.value;
+        }else{
+            search = {} as Search;
+        }
         search.fromLocation = this.f.fromLocation.value;
         search.toLocation = this.f.toLocation.value;
         search.minFromDate = this.f.minFromDate.value;
 
-        const newUrl = new URL(window.location.href.split('?')[0]);
-
+        let newparams = {};
+        
         // newUrl.searchParams.set('search', JSON.stringify(search));
         Object.keys(search).forEach(key => {
             if (search[key] !== undefined && search[key] !== null && search[key] !== 'null' && search[key] !== '') {
@@ -107,61 +111,73 @@ export class SearchTripComponent implements OnInit {
                         search[key] = 'yes';
                     }
                 }
-                newUrl.searchParams.set(key, search[key]);
+                newparams[key] = search[key]
             }
         });
-
-        window.location.href = newUrl.toString();
+        
+        this.router.navigate([], {queryParams:newparams});
     }
 
-    searchTrips() {
-        const newUrl = new URL(window.location.href);
+    searchTrips(params : ParamMap) {
         this.search = {} as Search;
-        let searchParamsNumber = 0;
-        newUrl.searchParams.forEach((value, key) => {
-            this.search[key] = value;
+        let searchParamsCount = 0;
+
+        params.keys.forEach(key => {
+            this.search[key] = params.get(key);
             if (key.includes('Date')) {// When it's a date, we have to convert it to be processed by the API
                 this.search[key] = new Date(this.search[key]); // form field (string) to Date object
             }
             if (key.includes('Talk')) {// On regarde les champs minTalk et maxTalk pour afficher la bonne valeur dans le range
-                if (value === 'no') {
+                if (params.get(key) === 'no') {
                     this.ff[key].setValue(0);
-                } else if (value === 'little') {
+                } else if (params.get(key) === 'little') {
                     this.ff[key].setValue(1);
-                } else if (value === 'yes') {
+                } else if (params.get(key) === 'yes') {
                     this.ff[key].setValue(2);
                 }
             }
-            searchParamsNumber++;
+            searchParamsCount++;
         });
-
-        if (searchParamsNumber === 0) {
+        
+        if (searchParamsCount === 0) {
             return;
         }
 
         this.f.fromLocation.setValue(this.search.fromLocation);
         this.f.toLocation.setValue(this.search.toLocation);
-        this.f.minFromDate.setValue(this.search.minFromDate.toISOString().substring(0, 16));
-        if (this.search.minToDate !== undefined) {
-            this.ff.minToDate.setValue(this.search.minToDate.toISOString().substring(0, 10));
+        this.f.minFromDate.setValue(this.getDateWithTimezone(this.search.minFromDate));
+        if (this.filtersToggleIcon === faMinus){//If filters are on (div open)
+            
+            if (this.search.minToDate !== undefined) {
+                this.ff.minToDate.setValue(this.getDateWithTimezone(this.search.minToDate));
+            }
+            this.ff.minLuggage.setValue(this.search.minLuggage);
+            this.ff.minSeats.setValue(this.search.minSeats);
+            // @ts-ignore smoke n'est pas un booléen donc faut comparer avec la valeur string
+            if (this.search.smoke !== undefined && this.search.smoke === 'true') {
+                this.ff.smoke.setValue(this.search.smoke);
+            }
         }
-        this.ff.minLuggage.setValue(this.search.minLuggage);
-        this.ff.minSeats.setValue(this.search.minSeats);
-        // @ts-ignore smoke n'est pas un booléen donc faut comparer avec la valeur string
-        if (this.search.smoke !== undefined && this.search.smoke === 'true') {
-            this.ff.smoke.setValue(this.search.smoke);
-        }
+        
 
         console.log(this.search);
 
         this.tripService.findTrips(this.search).pipe(first()).subscribe(
             data => {
                 this.loading = false;
-                if (data !== undefined) {// create succeeded
+                if (data !== undefined) {// search succeeded
                     this.trips = data;
                     this.trips.forEach(trip => {
                         trip.toDate = new Date(trip.toDate);
                         trip.fromDate = new Date(trip.fromDate);
+                        //We got user id, we need its infos
+                        this.userService.get(trip.user as string).subscribe(
+                            data => {
+                                if (data !== undefined) {// GET succeeded
+                                    trip.user = data.user;
+                                }
+                            }
+                        );
                     });
                     console.log(this.trips);
                     // this.alertService.info(`Found ${this.trips.length} trip(s)`);
@@ -174,17 +190,17 @@ export class SearchTripComponent implements OnInit {
         );
     }
 
-    hideDiv() {
-        if (this.sortDown === faPlus) {
-            this.sortDown = faMinus;
+    toggleFiltersDiv() {
+        if (this.filtersToggleIcon === faPlus) {
+            this.filtersToggleIcon = faMinus;
             document.getElementById('div-filters').classList.remove('d-none');
         } else {
-            this.sortDown = faPlus;
+            this.filtersToggleIcon = faPlus;
             document.getElementById('div-filters').classList.add('d-none');
         }
     }
 
-    book(tripId: number) {
-        window.location.href = '/trip/book?id=' + tripId;
+    book(tripId: string) {
+        this.router.navigate(['/trip/book', tripId]);
     }
 }
