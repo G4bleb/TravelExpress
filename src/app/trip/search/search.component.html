@@ -123,11 +123,11 @@
                         <div class="row border rounded p-2" [ngClass]="{'mt-4': i !== 0}">
                             <div class="col-12">
                                 <div class="float-left">
-                                    {{trip.fromLocation}} <strong>on</strong> {{trip.fromDate.toUTCString()}}<br>
-                                    {{trip.toLocation}} <strong>on</strong> {{trip.toDate.toUTCString()}}<br>
+                                    {{trip.fromLocation}} <strong>on</strong> {{trip.fromDate | date:'short'}}<br>
+                                    {{trip.toLocation}} <strong>on</strong> {{trip.toDate | date:'short'}}<br>
                                     {{trip.user.firstName + ' ' + trip.user.lastName}}<br>
                                 </div>
-                                <span class="float-right">5$ CAD</span>
+                                <span class="float-right">5$ CA</span>
                             </div>
                             <div class="col-12">
                                 <button (click)="book(trip._id)" class="btn btn-secondary float-right">Book a seat
