@@ -6,6 +6,8 @@ import {Search, Trip} from '@app/entities';
 import {first} from 'rxjs/operators';
 import {faMinus, faPlus} from '@fortawesome/free-solid-svg-icons';
 
+import {User} from '@app/entities'
+
 @Component({
     selector: 'app-search',
     templateUrl: './search.component.html',
@@ -172,9 +174,11 @@ export class SearchTripComponent implements OnInit {
                         trip.fromDate = new Date(trip.fromDate);
                         //We got user id, we need its infos
                         this.userService.get(trip.user as string).subscribe(
-                            data => {
-                                if (data !== undefined) {// GET succeeded
-                                    trip.user = data.user;
+                            user => {
+                                // console.log(data);
+                                if (user !== undefined) {// GET succeeded
+                                    trip.user = user as User;
+                                    
                                 }
                             }
                         );
