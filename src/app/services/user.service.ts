@@ -65,6 +65,15 @@ export class UserService {
         );
     }
 
+    /** GET : get a user from its id */
+    get(id:string): Observable<{ user: User }> {
+        return this.http.get<{ user: User }>(`${environment.apiUrl}/user`, { params: { id: id } }).pipe(
+            tap(({ user }) => {
+            }),
+            // catchError(this.handleError<{ user: User }>('Profile Editing'))
+        );
+    }
+
     getSessionUser(): User {
         return this.userSubject.getValue();
     }
