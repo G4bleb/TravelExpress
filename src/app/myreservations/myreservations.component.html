@@ -1,7 +1,7 @@
 <div class="card mt-5">
     <h4 class="card-header">My reservations</h4>
     <div class="card-body">
-        <p *ngIf="reservationsSize == 0" class="text-center">You have not created any trips</p>
+        <p *ngIf="reservationsSize == 0" class="text-center">You have not booked any seats</p>
         <div *ngIf="reservationsSize > 0">
             <div *ngFor="let res of reservations; let i = index" class="m-2">
                 <!-- TODO Revoir la présentation -->
