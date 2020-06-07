@@ -118,7 +118,6 @@ export class SearchTripComponent implements OnInit {
     }
 
     searchTrips(params: ParamMap) {
-        this.loading = true;
         this.search = {} as Search;
         let searchParamsCount = 0;
 
@@ -142,6 +141,8 @@ export class SearchTripComponent implements OnInit {
         if (searchParamsCount === 0) {
             return;
         }
+
+        this.loading = true;
 
         this.f.fromLocation.setValue(this.search.fromLocation);
         this.f.toLocation.setValue(this.search.toLocation);
