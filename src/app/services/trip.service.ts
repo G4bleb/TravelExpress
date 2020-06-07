@@ -61,7 +61,7 @@ export class TripService {
     getCurrentUserTrips(): Observable<Array<Trip>> {
         const user: User = this.userService.getSessionUser();
         return this.http.get<Array<Trip>>(`${environment.apiUrl}/trip`, {
-            headers: new HttpHeaders({ 'Content-Type': 'application/json' }), params: {userID:user._id}
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' }), params: {user:user._id}
         }).pipe(
             tap((trips) => {
                 // this.log('Got some trips : ' + trips.length);
