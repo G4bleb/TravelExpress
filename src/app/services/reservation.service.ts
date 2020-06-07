@@ -39,7 +39,8 @@ export class ReservationService {
   getCurrentUserReservations(): Observable<Array<Reservation>> {
     const user: User = this.userService.getSessionUser();
     return this.http.get<Array<Reservation>>(`${environment.apiUrl}/reservation`, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), params: { userID: user._id }
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` }),
+      params: { userID: user._id }
     }).pipe(
       tap((newReservation) => {
         // this.log(`created reservation w/ id=${newReservation._id}`);
