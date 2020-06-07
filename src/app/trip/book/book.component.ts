@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AlertService, TripService, UserService} from '@app/services';
+import {AlertService, TripService, UserService, ReservationService} from '@app/services';
 import {Reservation, Trip, User} from '@app/entities';
 import {first} from 'rxjs/operators';
 
@@ -23,7 +23,8 @@ export class BookTripComponent implements OnInit {
         private router: Router,
         private tripService: TripService,
         private alertService: AlertService,
-        private userService: UserService) {
+        private userService: UserService,
+        private reservationService:ReservationService) {
     }
 
     ngOnInit(): void {
@@ -94,9 +95,9 @@ export class BookTripComponent implements OnInit {
             '\nIt will cost you : ' + Number(this.f.seats.value * 5) + ' $CA');
         if (result) {
             const reservation: Reservation = this.form.value;
-            reservation.trip = this.trip;
-            reservation.user = this.userService.getSessionUser();
-            this.tripService.bookReservation(reservation).pipe(first()).subscribe(
+            reservation.trip = this.trip._id;
+            reservation.user = this.userService.getSessionUser()._id;
+            this.reservationService.createReservation(reservation).pipe(first()).subscribe(
                 data => {
                     this.loading = false;
                     if (data !== undefined) {// POST succeeded

@@ -54,20 +54,7 @@ export class TripService {
             tap((trip) => {
                 // this.log(`got trip w/ id=${trip._id}`);
             }),
-            catchError(this.handleError<{ trip: Trip }>('Trip research'))
-        );
-    }
-
-    bookReservation(reservation: Reservation) {
-        const user: User = this.userService.getSessionUser();
-        return this.http.post<Reservation>(`${environment.apiUrl}/reservation`, {
-            headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}`}),
-            params: reservation as any
-        }).pipe(
-            tap((newReservation) => {
-                // this.log(`created reservation w/ id=${newReservation._id}`);
-            }),
-            catchError(this.handleError<Reservation>('Trip research'))
+            catchError(this.handleError<{ trip: Trip }>('Trip getting'))
         );
     }
 
