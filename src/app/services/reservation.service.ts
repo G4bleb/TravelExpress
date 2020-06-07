@@ -31,9 +31,32 @@ export class ReservationService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` })
     }).pipe(
       tap((newReservation) => {
-        this.log(`created reservation w/ id=${newReservation._id}`);
+        // this.log(`created reservation w/ id=${newReservation._id}`);
       }),
       catchError(this.handleError<Reservation>('Booking'))
+    );
+  }
+
+  getCurrentUserReservations(): Observable<Array<Reservation>> {
+    const user: User = this.userService.getSessionUser();
+    return this.http.get<Array<Reservation>>(`${environment.apiUrl}/reservation`, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), params: { userID: user._id }
+    }).pipe(
+      tap((newReservation) => {
+        // this.log(`created reservation w/ id=${newReservation._id}`);
+      }),
+      catchError(this.handleError<Array<Reservation>>('Getting all reservations'))
+    );
+  }
+
+  getTripReservations(tripId:string): Observable<Array<Reservation>> {
+    return this.http.get<Array<Reservation>>(`${environment.apiUrl}/reservation`, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), params: { tripID: tripId }
+    }).pipe(
+      tap((newReservation) => {
+        // this.log(`created reservation w/ id=${newReservation._id}`);
+      }),
+      catchError(this.handleError<Array<Reservation>>('Getting reservations of trip'))
     );
   }
 
