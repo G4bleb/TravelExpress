@@ -20,15 +20,15 @@ export class MyTripsComponent implements OnInit {
 
   ngOnInit(): void {
     this.tripsReservations = [];
+    //Get the user's trips
     this.tripService.getCurrentUserTrips().subscribe(
       data => {
-        if (data !== undefined) {// search succeeded
+        if (data !== undefined) {// get succeeded
           this.trips = data;
           this.trips.forEach(trip => {
             trip.toDate = new Date(trip.toDate);
             trip.fromDate = new Date(trip.fromDate);
           });
-          console.log(this.trips);
         }
       },
       error => {
@@ -37,6 +37,7 @@ export class MyTripsComponent implements OnInit {
     );
   }
 
+  //get reservations on a specific trip, (pointed by its index in the this.trips array)
   seeReservations(tripIndex: number): void{
     this.reservationService.getTripReservations(this.trips[tripIndex]._id).subscribe(
       data => {
@@ -44,7 +45,6 @@ export class MyTripsComponent implements OnInit {
           data.forEach(res => {
             this.userService.get(res.user as string).subscribe(
               user => {
-                // console.log(data);
                 if (user !== undefined) {// GET succeeded
                   res.user = user as User;
                 }
