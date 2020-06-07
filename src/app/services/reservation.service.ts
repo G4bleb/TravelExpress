@@ -70,9 +70,9 @@ export class ReservationService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` })
     }).pipe(
       tap((newReservation) => {
-        // this.log(`created reservation w/ id=${newReservation._id}`);
+        // this.log(`paid reservation w/ id=${newReservation._id}`);
       }),
-      catchError(this.handleError<Reservation>('Booking'))
+      catchError(this.handleError<Reservation>('Payment'))
     );
   }
 
