@@ -66,6 +66,7 @@ export class BookTripComponent implements OnInit {
                             // console.log(data);
                             if (user !== undefined) {// GET succeeded
                                 this.trip.user = user as User;
+                                this.form.controls['seats'].setValidators([Validators.min(1), Validators.max(this.trip.user.seats)]);
                             }
                         }
                     );
@@ -125,5 +126,12 @@ export class BookTripComponent implements OnInit {
             return "";
         }
         return this.trip.user.lastName;
+    }
+
+    get tripUserSeats() {
+        if (typeof this.trip.user === 'string') {
+            return "";
+        }
+        return this.trip.user.seats;
     }
 }
