@@ -32,8 +32,7 @@ export class BookTripComponent implements OnInit {
             this.router.navigate(['/']);
         }
         this.form = this.formBuilder.group({
-            seats: [1, [Validators.min(1), Validators.max(10)]],
-            paid: [true]
+            seats: [1, [Validators.min(1), Validators.max(10)]]
         });
 
         // get return url from route parameters or default to '/'
@@ -105,6 +104,7 @@ export class BookTripComponent implements OnInit {
                     this.loading = false;
                     if (data !== undefined) {// POST succeeded
                         this.alertService.success('Reservation successfully created', {keepAfterRouteChange: true});
+                        this.reservationService.payReservation(data._id);
                         this.router.navigate([this.returnUrl]);
                     }
                 },

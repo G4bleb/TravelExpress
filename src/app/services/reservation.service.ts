@@ -26,7 +26,6 @@ export class ReservationService {
 
   createReservation(reservation: Reservation) {
     const user: User = this.userService.getSessionUser();
-    console.log(reservation);
     return this.http.post<Reservation>(`${environment.apiUrl}/reservation`, reservation, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` })
     }).pipe(
@@ -57,6 +56,18 @@ export class ReservationService {
         // this.log(`created reservation w/ id=${newReservation._id}`);
       }),
       catchError(this.handleError<Array<Reservation>>('Getting reservations of trip'))
+    );
+  }
+  
+  payReservation(reservationId:string): void {
+    const user: User = this.userService.getSessionUser();
+    this.http.post<Reservation>(`${environment.apiUrl}//reservation/pay/${reservationId}`, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` })
+    }).pipe(
+      tap((newReservation) => {
+        // this.log(`created reservation w/ id=${newReservation._id}`);
+      }),
+      catchError(this.handleError<Reservation>('Booking'))
     );
   }
 
