@@ -16,6 +16,8 @@ import {SearchTripComponent} from './trip/search/search.component';
 import {CreateTripComponent} from './trip/create/create.component';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {BookTripComponent} from './trip/book/book.component';
+import { MyTripsComponent } from './mytrips/mytrips.component';
+import { MyReservationsComponent } from './myreservations/myreservations.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +30,8 @@ import {BookTripComponent} from './trip/book/book.component';
         SearchTripComponent,
         CreateTripComponent,
         BookTripComponent,
+        MyTripsComponent,
+        MyReservationsComponent,
     ],
     imports: [
         BrowserModule,
