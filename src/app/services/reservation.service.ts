@@ -24,6 +24,7 @@ export class ReservationService {
 
   }
 
+  // POST a new reservation
   createReservation(reservation: Reservation) {
     const user: User = this.userService.getSessionUser();
     return this.http.post<Reservation>(`${environment.apiUrl}/reservation`, reservation, {
@@ -36,6 +37,7 @@ export class ReservationService {
     );
   }
 
+  //GET all of the current user's reservations
   getCurrentUserReservations(): Observable<Array<Reservation>> {
     const user: User = this.userService.getSessionUser();
     return this.http.get<Array<Reservation>>(`${environment.apiUrl}/reservation`, {
@@ -49,6 +51,7 @@ export class ReservationService {
     );
   }
 
+  //GET all the reservations on a specific trip (using the trip's id)
   getTripReservations(tripId:string): Observable<Array<Reservation>> {
     return this.http.get<Array<Reservation>>(`${environment.apiUrl}/reservation`, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }), params: { tripID: tripId }
@@ -60,6 +63,7 @@ export class ReservationService {
     );
   }
   
+  //POST pay a reservation
   payReservation(reservationId:string): void {
     const user: User = this.userService.getSessionUser();
     this.http.post<Reservation>(`${environment.apiUrl}//reservation/pay/${reservationId}`, {
