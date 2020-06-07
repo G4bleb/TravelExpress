@@ -36,6 +36,7 @@ export class TripService {
         );
     }
 
+    // GET (search) trips
     findTrips(search: Search): Observable<Array<Trip>> {
         return this.http.get<Array<Trip>>(`${environment.apiUrl}/trip`, {
             headers: new HttpHeaders({'Content-Type': 'application/json'}), params: search as any
@@ -47,17 +48,19 @@ export class TripService {
         );
     }
 
-    getTrip(id: string): Observable<{ trip: Trip }> {
-        return this.http.get<{ trip: Trip }>(`${environment.apiUrl}/trip`, {
+    // GET a trip by its id
+    getTrip(id: string): Observable<Array<Trip>> {
+        return this.http.get<Array<Trip>>(`${environment.apiUrl}/trip`, {
             headers: new HttpHeaders({'Content-Type': 'application/json'}), params: id as any
         }).pipe(
-            tap((trip) => {
+            tap((data) => {
                 // this.log(`got trip w/ id=${trip._id}`);
             }),
-            catchError(this.handleError<{ trip: Trip }>('Trip getting'))
+            catchError(this.handleError<Array<Trip>>('Trip getting'))
         );
     }
 
+    // GET all the trips created by the current user
     getCurrentUserTrips(): Observable<Array<Trip>> {
         const user: User = this.userService.getSessionUser();
         return this.http.get<Array<Trip>>(`${environment.apiUrl}/trip`, {
