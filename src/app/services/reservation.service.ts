@@ -66,7 +66,7 @@ export class ReservationService {
   //POST pay a reservation
   payReservation(reservationId:string): void {
     const user: User = this.userService.getSessionUser();
-    this.http.post<Reservation>(`${environment.apiUrl}//reservation/pay/${reservationId}`, {
+    this.http.post<Reservation>(`${environment.apiUrl}/reservation/pay/${reservationId}`, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` })
     }).pipe(
       tap((newReservation) => {
