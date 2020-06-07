@@ -5,8 +5,8 @@
             <div *ngIf="trip" class="row">
                 <div class="mb-3 col-12">
                     <div class="float-left">
-                        {{trip.fromLocation}} <strong>on</strong> {{trip.fromDate.toUTCString()}}<br>
-                        {{trip.toLocation}} <strong>on</strong> {{trip.toDate.toUTCString()}}<br>
+                        {{trip.fromLocation}} <strong>on</strong> {{trip.fromDate | date:'short'}}<br>
+                        {{trip.toLocation}} <strong>on</strong> {{trip.toDate | date:'short'}}<br>
                         {{tripUserFirstName + ' ' + tripUserLastName}}<br>
                         {{tripUserSeats}} seats available<br>
                     </div>
