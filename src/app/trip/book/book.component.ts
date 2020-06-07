@@ -28,6 +28,9 @@ export class BookTripComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (this.userService.getSessionUser() === null) {
+            this.router.navigate(['/']);
+        }
         this.form = this.formBuilder.group({
             seats: [1, [Validators.min(1), Validators.max(10)]],
             paid: [true]

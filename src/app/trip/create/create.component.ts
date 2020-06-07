@@ -27,6 +27,9 @@ export class CreateTripComponent implements OnInit {
 
     ngOnInit(): void {
         let currentUser = this.userService.getSessionUser();
+        if (currentUser === null) {
+            this.router.navigate(['/']);
+        }
 
         this.form = this.formBuilder.group({
             user: [currentUser],

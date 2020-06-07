@@ -25,6 +25,9 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.userService.getSessionUser() !== null) {
+            this.router.navigate(['/']);
+        }
         this.form = this.formBuilder.group({
             email: ['', [Validators.email, Validators.required]],
             password: ['', [Validators.required, Validators.minLength(6)]],

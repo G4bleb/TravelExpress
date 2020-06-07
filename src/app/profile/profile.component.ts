@@ -27,6 +27,9 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (this.userService.getSessionUser() === null) {
+            this.router.navigate(['/']);
+        }
         this.currentUser = this.userService.getSessionUser();
         this.form = this.formBuilder.group({
             email: ['', [Validators.email]],

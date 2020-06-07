@@ -30,6 +30,9 @@ export class RegisterComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (this.userService.getSessionUser() !== null){
+            this.router.navigate(['/']);
+        }
         this.form = this.formBuilder.group({
             email: ['', [Validators.email, Validators.required]],
             tel: ['', [Validators.required, Validators.pattern('[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{3}[-\\s.]?[0-9]{4,6}')]],
