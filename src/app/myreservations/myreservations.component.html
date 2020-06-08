@@ -12,7 +12,7 @@
                             <div *ngIf="res.trip !== undefined">
                                 <strong>From :</strong> {{res.trip.fromLocation}} <strong>on</strong> {{res.trip.fromDate | date:'short'}}<br>
                                 <strong>To :</strong> {{res.trip.toLocation}} <strong>on</strong> {{res.trip.toDate | date:'short'}}<br>
-                                <strong>Booked seats :</strong> {{res.trip.seats}} <br>
+                                <strong>Booked seats :</strong> {{res.seats}} <br>
                                 <div *ngIf="res.trip.user !== undefined">
                                     <strong>Vehicle :</strong> {{res.trip.user.vehicle}}<br>
                                     <strong>Accepted luggage size :</strong> {{res.trip.user.luggageSize}}<br>
