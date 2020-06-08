@@ -39,7 +39,7 @@ export class BookTripComponent implements OnInit {
         this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
 
         const id: string = this.route.snapshot.paramMap.get('id');
-        console.log(`Getting trip w/ id : ${id}`);
+        // console.log(`Getting trip w/ id : ${id}`);
 
         if (id === undefined) {
             this.alertService.error('Failed to parse trip id from route');
@@ -58,11 +58,9 @@ export class BookTripComponent implements OnInit {
             data => {
                 this.loading = false;
                 if (data !== undefined) {// GET succeeded
-                    this.trip = data[0];
+                    this.trip = data;
                     this.trip.toDate = new Date(this.trip.toDate);
                     this.trip.fromDate = new Date(this.trip.fromDate);
-
-                    console.log(this.trip.user);
 
                     this.userService.get(this.trip.user as string).subscribe(
                         user => {
@@ -104,7 +102,7 @@ export class BookTripComponent implements OnInit {
                     this.loading = false;
                     if (data !== undefined) {// POST succeeded
                         this.alertService.success('Reservation successfully created', {keepAfterRouteChange: true});
-                        this.reservationService.payReservation(data._id);
+                        this.reservationService.payReservation(data._id).subscribe({ error: e => console.error(e) });
                         this.router.navigate([this.returnUrl]);
                     }
                 },
