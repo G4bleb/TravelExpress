@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - Clone this repo
 - `npm install` to install all the required dependencies
-- `ng ser` to start a local dev server
+- `ng serve` to start a local dev server
 - The webapp is available at http://localhost:4200
 
 ## Development server
