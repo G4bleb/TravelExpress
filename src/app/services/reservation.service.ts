@@ -64,12 +64,14 @@ export class ReservationService {
   }
   
   //POST pay a reservation
-  payReservation(reservationId:string): void {
+  payReservation(reservationId: string): Observable<Reservation> {
     const user: User = this.userService.getSessionUser();
-    this.http.post<Reservation>(`${environment.apiUrl}/reservation/pay/${reservationId}`, {
+    console.log(`${environment.apiUrl}/reservation/pay/${reservationId}`);
+    console.log(`Bearer ${user.token}`);
+    return this.http.post<Reservation>(`${environment.apiUrl}/reservation/pay/${reservationId}`, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` })
     }).pipe(
-      tap((newReservation) => {
+      tap((paidReservation) => {
         // this.log(`paid reservation w/ id=${newReservation._id}`);
       }),
       catchError(this.handleError<Reservation>('Payment'))

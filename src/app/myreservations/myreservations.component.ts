@@ -28,11 +28,9 @@ export class MyReservationsComponent implements OnInit {
             console.log(res);
 
             this.tripService.getTrip(res.trip as string).subscribe(data => {//Get the trip associated to the reservation
-              let tmp:Trip = data[0];
-
-              tmp.toDate = new Date(tmp.toDate);
-              tmp.fromDate = new Date(tmp.fromDate);
-              res.trip = tmp;
+              data.toDate = new Date(data.toDate);
+              data.fromDate = new Date(data.fromDate);
+              res.trip = data;
 
               this.userService.get(res.trip.user as string).subscribe(//Get the user associated to the trip
                 user => {
