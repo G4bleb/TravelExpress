@@ -68,8 +68,8 @@ export class ReservationService {
     const user: User = this.userService.getSessionUser();
     console.log(`${environment.apiUrl}/reservation/pay/${reservationId}`);
     console.log(`Bearer ${user.token}`);
-    return this.http.post<Reservation>(`${environment.apiUrl}/reservation/pay/${reservationId}`, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` })
+    return this.http.post<Reservation>(`${environment.apiUrl}/reservation/pay/${reservationId}`, null,{
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${user.token}` }),
     }).pipe(
       tap((paidReservation) => {
         // this.log(`paid reservation w/ id=${newReservation._id}`);
