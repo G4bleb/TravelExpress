@@ -2,6 +2,13 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.9.
 
+# Quick install & run
+
+- Clone this repo
+- `npm install` to install all the required dependencies
+- `ng ser` to start a local dev server
+- the API is available at http://localhost:4200
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
